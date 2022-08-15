@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 const Brands = () => {
 
@@ -8,13 +9,16 @@ const Brands = () => {
   ]
 
   return (
-    <div className="row row-cols-1 row-cols-md-5 g-2">
+    <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 gy-1 gx-5">
       {brands.map(brand =>
-        <div className="col">
-          {/* <Image src={`/brands/${brand.toLowerCase()}.png`} width={50} height={50} objectFit="cover" quality={100} /> */}
-
-          <img src={`/brands/${brand.toLowerCase()}.png`} style={{ width: '50px' }} />
-        </div>
+        <Link href={`/`} key={brand}>
+          <a className="col d-flex justify-content-between align-items-center">
+            <Image src={`/brands/${brand.toLowerCase()}.png`} width='60px' height='60px' quality={100} />
+            <div>{brand}</div>
+            <i className="bi bi-chevron-right" />
+            {/* <img src={`/brands/${brand.toLowerCase()}.png`} style={{ width: '50px' }} /> */}
+          </a>
+        </Link>
       )}
     </div>
   )

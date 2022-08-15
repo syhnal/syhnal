@@ -1,8 +1,17 @@
 import type { NextPage } from 'next'
-import { Article } from 'ui'
+import { Article, Card } from 'ui'
 import { Banner, Brands, NavBar, Title } from '../components'
+import { GetStaticProps } from 'next'
+import { getClient } from '../utils/cms/sanity.server'
+import groq from 'groq'
+import { Product, toProduct } from 'logic'
 
-const Home: NextPage = () => {
+interface IHomeProps {
+  products: Product[]
+}
+
+const Home: NextPage<IHomeProps> = ({ products }) => {
+  console.log(products)
   return (
     <div>
       <Title val='Syhnal' />
@@ -11,7 +20,15 @@ const Home: NextPage = () => {
       <div className='container-xl'>
         <Banner />
 
-        <Brands />
+        <div className='my-5'>
+          <h2 className='mb-3'>Популярні товри</h2>
+
+        </div>
+
+        <div className='my-5'>
+          <h2 className='mb-3'>Ми продаємо запчастини для наступних марок</h2>
+          <Brands />
+        </div>
 
         <Article className='my-5'
           header='Як правильно купити запчастини?'
@@ -26,6 +43,19 @@ const Home: NextPage = () => {
       </div>
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+  const products = await getClient(preview).fetch(
+    groq`*[_type == 'product']`
+  ).then<Product>(data => data.map((product: any) => toProduct(product)))
+
+  return {
+    props: {
+      products: products,
+    },
+    revalidate: 10,
+  }
 }
 
 export default Home

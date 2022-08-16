@@ -4,25 +4,27 @@ import { Banner, Brands, NavBar, Title } from '../components'
 import { GetStaticProps } from 'next'
 import { getClient } from '../utils/cms/sanity.server'
 import groq from 'groq'
-import { Product, toProduct } from 'logic'
+import { Product, toProduct, toProductList } from 'logic'
+import { ProductList } from '../components/content/ProductList'
 
 interface IHomeProps {
+  novelty: Product[]
   products: Product[]
 }
 
-const Home: NextPage<IHomeProps> = ({ products }) => {
-  console.log(products)
+const Home: NextPage<IHomeProps> = ({ products, novelty }) => {
+  console.log(novelty)
   return (
     <div>
-      <Title val='Syhnal' />
+      <Title val='Сигнал' />
       <NavBar />
 
       <div className='container-xl'>
         <Banner />
 
         <div className='my-5'>
-          <h2 className='mb-3'>Популярні товри</h2>
-
+          <h2 className='mb-3'>Популярні товари</h2>
+          <ProductList items={novelty} />
         </div>
 
         <div className='my-5'>
@@ -46,13 +48,20 @@ const Home: NextPage<IHomeProps> = ({ products }) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const products = await getClient(preview).fetch(
+  const client = getClient(preview)
+
+  const novelty = await client.fetch(
+    groq`*[_type == 'product'] | order(_createdAt asc)[0...5]`
+  ).then<Product>(toProductList)
+
+  const products = await client.fetch(
     groq`*[_type == 'product']`
-  ).then<Product>(data => data.map((product: any) => toProduct(product)))
+  ).then<Product>(toProductList)
 
   return {
     props: {
-      products: products,
+      products,
+      novelty
     },
     revalidate: 10,
   }

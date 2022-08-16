@@ -1,27 +1,31 @@
+import { Product } from "logic"
 import { MouseEventHandler } from "react"
 import { Card } from "ui"
+import { urlFor } from "../../utils/cms/sanity"
 import { useStoreContext } from "../../utils/store"
 
 interface IProductListProps {
-  items: string[]
+  items: Product[]
 }
 
 const ProductList = ({ items }: IProductListProps) => {
   const store = useStoreContext()
 
-  const toCart = () => {
-    store?.cart.set([...store.cart.val, "tsr"])
+  const toCart = (item: Product) => {
+    if (store && !store.cart.val.includes(item.id)) {
+      store.cart.set([...store.cart.val, item.id])
+    }
   }
 
   return (
     <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
       {items.map(item =>
-        <div className="col">
+        <div className="col" key={item.id}>
           <Card
-            img='/brands/bmw.png'
-            header='12 999 грн'
-            content='Акумулятор Bosch 6 CT-60-R S4 Silver 0092S40240'
-            onBtnClick={toCart} btnLabel='В кошик'
+            img={urlFor(item.img).url()}
+            header={`${item.price.from}-${item.price.to} грн`}
+            content={item.title.ua}
+            onBtnClick={() => toCart(item)} btnLabel='В кошик'
           />
         </div>
       )}

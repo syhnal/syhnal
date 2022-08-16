@@ -10,7 +10,7 @@ interface IStoreContext {
 const StoreContext = createContext<IStoreContext | null>(null)
 
 const StoreProvider: FC = ({ children }) => {
-  const [cart, setCart] = useState(["t  ", "t", "tscr", "", "", ""])
+  const [cart, setCart] = useState<string[]>([])
 
   return (
     <StoreContext.Provider

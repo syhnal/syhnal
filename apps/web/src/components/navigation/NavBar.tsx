@@ -1,16 +1,21 @@
 import Link from "next/link"
 import { IconInput } from "ui"
+import { useStoreContext } from "../../utils/store"
 
 const NavBar = () => {
+  const store = useStoreContext()
+
   return (
     <div className="border-bottom py-2 mb-3">
       <div className="d-flex align-items-center container-xl">
         <button className="btn btn-outline-primary btn-lg">
           Каталог
         </button>
-        <span className="fs-3 mx-5" style={{ fontFamily: "Bender" }} >
-          СИГНАЛ
-        </span>
+        <Link href="/">
+          <a className="fs-3 mx-5 text-dark" style={{ fontFamily: "Bender" }} >
+            СИГНАЛ
+          </a>
+        </Link>
         <IconInput icon="search" placeholder="Пошук" />
         <span className="mx-5 text-nowrap fw-semibold">050 563 43 41</span>
 
@@ -23,7 +28,7 @@ const NavBar = () => {
                   lineHeight: '1.1', fontStyle: 'normal', left: '95%'
                 }}
               >
-                1
+                {store?.cart.val.length}
               </div>
             </i>
             <div className="text-secondary" style={{ fontSize: '11px' }}>Кошик</div>

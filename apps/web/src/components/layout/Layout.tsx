@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import { FC } from 'react'
+import { Footer } from '../navigation/Footer'
 
 const Layout: FC = ({ children }) => {
   return (
@@ -19,6 +20,8 @@ const Layout: FC = ({ children }) => {
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossOrigin="anonymous" />
 
       {children}
+
+      <Footer />
     </>
   )
 }

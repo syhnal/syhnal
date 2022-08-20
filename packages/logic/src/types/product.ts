@@ -9,7 +9,7 @@ export interface Product {
     to: number
   }
   slug: string
-  img: any
+  img: any,
 }
 
 // const compareByTime(a: Product, b: Product):boolean => 
@@ -59,11 +59,12 @@ const toProduct = (data: any): Product => {
       from: data.price.from,
       to: data.price.to
     },
-    slug: data.slug,
+    slug: data.slug.current,
     img: data.img
   }
 }
 
-const toProductList = (data: any) => data.map((product: any) => toProduct(product))
+const toProductList = (data: any): Product[] =>
+  data.map((product: any) => toProduct(product))
 
 export { toProduct, toProductList }

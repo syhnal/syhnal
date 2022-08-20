@@ -20,7 +20,7 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
       <Title val="Корзина" />
       <NavBar />
 
-      <div className="container-xl">
+      <div className="container-xl" style={{ minHeight: "50vh" }}>
         <div>
           <h2>Кошик</h2>
           <ul className="list-group list-group-flush">
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
 
   const products = await client.fetch(
     groq`*[_type == 'product']`
-  ).then<Product>(toProductList)
+  ).then<Product[]>(toProductList)
 
   return {
     props: {

@@ -34,6 +34,13 @@ export default {
       to: [{ type: 'category' }]
     },
     {
+      title: 'Бренд авто',
+      name: 'brand',
+      type: 'reference',
+      weak: true,
+      to: [{ type: 'brand' }]
+    },
+    {
       title: 'Ціна',
       name: 'price',
       type: 'object',
@@ -59,6 +66,12 @@ export default {
         isUnique: isSlugUnique,
       },
       validation: slug => slug.required()
-    }
+    },
+    {
+      title: 'Кіл-ть замовлень',
+      name: 'orders',
+      type: 'number',
+      initialValue: 0
+    },
   ]
 }

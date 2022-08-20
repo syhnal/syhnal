@@ -35,6 +35,12 @@ export default {
         isUnique: isSlugUnique,
       },
       validation: slug => slug.required()
-    }
+    },
+    {
+      title: 'Кіл-ть замовлень',
+      name: 'orders',
+      type: 'number',
+      initialValue: 0
+    },
   ]
 }

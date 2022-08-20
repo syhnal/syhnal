@@ -1,19 +1,27 @@
 import type { NextPage } from 'next'
 import { Article, Card } from 'ui'
-import { Banner, Brands, NavBar, Title } from '../components'
+import { Banner, BrandList, NavBar, Title } from '../components'
 import { GetStaticProps } from 'next'
 import { getClient } from '../utils/cms/sanity.server'
 import groq from 'groq'
-import { Product, toProduct, toProductList } from 'logic'
+import { Brand, Category, Product, toBrandList, toCategory, toCategoryList, toProductList, uniqueBrand } from 'logic'
 import { ProductList } from '../components/content/ProductList'
+import Link from 'next/link'
+import { urlFor } from '../utils/cms/sanity'
 
 interface IHomeProps {
   novelty: Product[]
-  products: Product[]
+  brands: {
+    stock: Brand[]
+    order: Brand[]
+  }
+  popular: {
+    categories: Category[]
+    products: Product[]
+  }
 }
 
-const Home: NextPage<IHomeProps> = ({ products, novelty }) => {
-  console.log(novelty)
+const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
   return (
     <div>
       <Title val='Сигнал' />
@@ -23,13 +31,47 @@ const Home: NextPage<IHomeProps> = ({ products, novelty }) => {
         <Banner />
 
         <div className='my-5'>
-          <h2 className='mb-3'>Популярні товари</h2>
+          <h2 className='mb-3'>Новинки</h2>
           <ProductList items={novelty} />
         </div>
 
-        <div className='my-5'>
-          <h2 className='mb-3'>Ми продаємо запчастини для наступних марок</h2>
-          <Brands />
+        <div className='my-5 row row-cols-1 row-cols-md-2 g-5'>
+          <div className='col pe-md-5'>
+            <h2 className='mb-3'>В наявності</h2>
+            <BrandList link='/' items={brands.stock} />
+          </div>
+          <div className='col ps-md-5'>
+            <h2 className='mb-3'>Під замовлення</h2>
+            <BrandList link='/order' items={brands.order} />
+          </div>
+        </div>
+
+        <div className='py-5'>
+          <h2 className='mb-3'>Популярні товари</h2>
+          <ProductList items={popular.products} />
+        </div>
+
+        <div className='py-5'>
+          <h2>Популярні категорії</h2>
+          <div className='row row-cols-2 row-cols-md-4'>
+            {popular.categories.map(category =>
+              <Link href={`/`} key={category.id}>
+                <a className='col'>
+                  <div className='card border-0'>
+                    <img src={urlFor(category.img).url()} className="card-img-top" alt="" />
+                    <h5 className='card-title text-center'>{category.title.ua}</h5>
+                    {/* <div className='card-body'>
+                      <h5 className='card-title text-center'>{category.title.ua}</h5>
+                    </div> */}
+                  </div>
+                </a>
+              </Link>
+            )}
+          </div>
+        </div>
+
+        <div>
+
         </div>
 
         <Article className='my-5'
@@ -50,21 +92,40 @@ const Home: NextPage<IHomeProps> = ({ products, novelty }) => {
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const client = getClient(preview)
 
-  const novelty = await client.fetch(
-    groq`*[_type == 'product'] | order(_createdAt asc)[0...5]`
-  ).then<Product>(toProductList)
+  const novelty = await client
+    .fetch(groq`*[_type == 'product'] | order(_createdAt asc)[0...5]`)
+    .then<Product[]>(toProductList)
 
-  const products = await client.fetch(
-    groq`*[_type == 'product']`
-  ).then<Product>(toProductList)
+  const stockBrands = await client
+    .fetch(groq`*[_type == 'product']{...brand->}`)
+    .then<Brand[]>(toBrandList)
+    .then(brands => brands.filter(uniqueBrand))
+
+  const orderBrands = await client
+    .fetch(groq`*[_type == 'brand' && !(_id in ["${stockBrands.map(brand => brand.id).join('", "')}"])]`)
+    .then<Brand[]>(toBrandList)
+
+  const popularCategories = await client
+    .fetch(groq`*[_type == 'category'] | order(orders asc)[0...10]`)
+    .then<Category[]>(toCategoryList)
+
+  const popularProducts = await client.fetch(groq`*[_type == 'product'] | order(orders asc)[0...10]`)
+    .then<Product[]>(toProductList)
 
   return {
     props: {
-      products,
-      novelty
+      novelty,
+      brands: {
+        stock: stockBrands,
+        order: orderBrands
+      },
+      popular: {
+        categories: popularCategories,
+        products: popularProducts
+      }
     },
     revalidate: 10,
   }
 }
 
-export default Home
+export default HomePage

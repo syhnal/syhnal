@@ -8,4 +8,4 @@ export * from './navigation/Footer'
 
 // content
 export * from './content/Banner'
-export * from './content/Brands'
+export * from './content/BrandList'

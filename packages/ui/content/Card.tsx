@@ -4,19 +4,32 @@ type CardProps = {
   img?: string
   header: string
   content: string
-  onBtnClick?: MouseEventHandler
+
+  btnColor?: string
   btnLabel?: string
+  onBtnClick?: MouseEventHandler
+
+  dataBsToggle?: string
+  dataBsTarget?: string
 }
 
-const Card = ({ img, header, content, onBtnClick, btnLabel }: CardProps) => {
+const Card = ({ img, header, content, onBtnClick, btnLabel, btnColor, dataBsTarget, dataBsToggle }: CardProps) => {
   return (
     <div className="card border-0">
-      <img src={img} className="card-img-top" alt="" />
-      <hr className="p-0 m-0" />
+      <div data-bs-toggle={dataBsToggle} data-bs-target={dataBsTarget}
+        style={{ cursor: dataBsToggle ? "pointer" : "default" }}>
+        <img src={img} className="card-img-top" alt="" />
+        <hr className="p-0 m-0" />
+      </div>
       <div className="card-body">
         <h5 className="card-title">{header}</h5>
         <p className="card-text">{content}</p>
-        {btnLabel ? <button className="btn btn-outline-primary" onClick={onBtnClick}>{btnLabel}</button> : null}
+        {btnLabel
+          ? <button className={`btn btn-outline-${btnColor} shadow-none`} onClick={onBtnClick}>
+            {btnLabel}
+          </button>
+          : null
+        }
       </div>
     </div>
   )

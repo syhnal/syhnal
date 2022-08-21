@@ -1,9 +1,9 @@
 import groq from "groq";
 import { Product, toProductList } from "logic";
 import { GetStaticProps, NextPage } from "next";
-import { NavBar, Title } from "../components";
-import { ProductList } from "../components/content/ProductList";
-import { getClient } from "../utils/cms/sanity.server";
+import { NavBar, Title } from "../../components";
+import { ProductList } from "../../components/content/ProductList";
+import { getClient } from "../../utils/cms/sanity.server";
 
 interface CatalogProps {
   products: Product[]

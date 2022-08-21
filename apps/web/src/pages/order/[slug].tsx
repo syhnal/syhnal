@@ -1,11 +1,12 @@
 import groq from "groq"
-import { Product, toProduct } from "logic"
+import { Product, tgSendMessage, toProduct } from "logic"
 import { GetStaticPaths, GetStaticProps, NextPage } from "next"
 import Image from "next/image"
 import { useState } from "react"
 import { NavBar, Person, Title } from "../../components"
 import { urlFor } from "../../utils/cms/sanity"
 import { getClient } from "../../utils/cms/sanity.server"
+import { tgConfig } from "../../utils/telegram/config"
 
 interface OrderPageProps {
   product: Product
@@ -17,6 +18,28 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
   const [phone, setPhone] = useState("+380")
+
+  const order = () => {
+    const trim = {
+      name: name.trim(),
+      surname: surname.trim(),
+      phone: phone.trim()
+    }
+
+    if (trim.name != "" && trim.surname != "") {
+      const text = `
+${surname} ${name} бажає замовити:
+${product.title.ua}
+кількість: ${count} ${count > 1 ? `\nкожен від ${product.price.from} до ${product.price.to} грн` : ""}
+всього від ${product.price.from * count} до ${product.price.to * count} грн
+Телефон: ${phone}
+`
+
+      tgSendMessage(text, tgConfig.token)
+    } else {
+      alert("Усі поля моють бути заповненими")
+    }
+  }
 
   return (
     <div>
@@ -57,7 +80,7 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
         </div>
 
         <div className="d-flex justify-content-center mt-3">
-          <button className="btn btn-primary btn-lg">Замовити</button>
+          <button className="btn btn-primary btn-lg" onClick={order}>Замовити</button>
         </div>
       </div>
     </div>

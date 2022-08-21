@@ -55,7 +55,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
           <h2>Популярні категорії</h2>
           <div className='row row-cols-2 row-cols-md-4'>
             {popular.categories.map(category =>
-              <Link href={`/`} key={category.id}>
+              <Link href={`/catalog/${category.slug}`} key={category.id}>
                 <a className='col'>
                   <div className='card border-0'>
                     <img src={urlFor(category.img).url()} className="card-img-top" alt="" />

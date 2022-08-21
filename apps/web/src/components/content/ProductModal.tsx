@@ -1,7 +1,9 @@
 import { Product } from "logic"
 import Image from "next/image"
-import { MouseEventHandler } from "react"
+import Link from "next/link"
+import { MouseEventHandler, useEffect } from "react"
 import { urlFor } from "../../utils/cms/sanity"
+import { useStoreContext } from "../../utils/store"
 
 interface ProductModalProps {
   product: Product
@@ -14,7 +16,7 @@ interface ProductModalProps {
 
 const ProductModal = ({ product, id, inCart, toCartClick }: ProductModalProps) => {
   return (
-    <div className="modal" id={id} >
+    <div className="modal" id={id}>
       <div className="modal-dialog modal-lg modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-body p-5 row">
@@ -32,7 +34,11 @@ const ProductModal = ({ product, id, inCart, toCartClick }: ProductModalProps) =
                 >
                   {inCart ? "Додано" : "В кошик"}
                 </button>
-                <button className="btn btn-lg btn-outline-primary">Замовити в 1 клік</button>
+                <Link href={`/order/${product.slug}`}>
+                  <button className="btn btn-lg btn-outline-primary" data-bs-dismiss="modal">
+                    Замовити в 1 клік
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

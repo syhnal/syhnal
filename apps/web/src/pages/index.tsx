@@ -8,6 +8,7 @@ import { Brand, Category, Product, toBrandList, toCategory, toCategoryList, toPr
 import { ProductList } from '../components/content/ProductList'
 import Link from 'next/link'
 import { urlFor } from '../utils/cms/sanity'
+import { Viewed } from '../components/content/Viewed'
 
 interface IHomeProps {
   novelty: Product[]
@@ -25,7 +26,6 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
   return (
     <div>
       <Title val='Сигнал' />
-      <NavBar />
 
       <div className='container-xl'>
         <Banner />
@@ -71,7 +71,8 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
         </div>
 
         <div>
-
+          <h2 className='mb-3'>Ви переглядали</h2>
+          <Viewed />
         </div>
 
         <Article className='my-5'

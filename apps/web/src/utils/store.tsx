@@ -1,28 +1,42 @@
+import { CartItem, OrderProduct, Product } from "logic";
 import { createContext, Dispatch, FC, SetStateAction, useContext, useState } from "react";
 
 interface IStoreContext {
   cart: {
-    val: string[]
-    set: Dispatch<SetStateAction<string[]>>
+    stock: {
+      val: CartItem<string>[]
+      set: Dispatch<SetStateAction<CartItem<string>[]>>
+    }
+    order: {
+      val: CartItem<OrderProduct>[]
+      set: Dispatch<SetStateAction<CartItem<OrderProduct>[]>>
+    }
   }
   viewed: {
-    val: string[]
-    set: Dispatch<SetStateAction<string[]>>
+    val: Product[]
+    set: Dispatch<SetStateAction<Product[]>>
   }
 }
 
 const StoreContext = createContext<IStoreContext | null>(null)
 
 const StoreProvider: FC = ({ children }) => {
-  const [cart, setCart] = useState<string[]>([])
-  const [viewed, setViewed] = useState<string[]>([])
+  const [stockCart, setStockCart] = useState<CartItem<string>[]>([])
+  const [orderCart, setOrderCart] = useState<CartItem<OrderProduct>[]>([])
+  const [viewed, setViewed] = useState<Product[]>([])
 
   return (
     <StoreContext.Provider
       value={{
         cart: {
-          val: cart,
-          set: setCart
+          stock: {
+            val: stockCart,
+            set: setStockCart
+          },
+          order: {
+            val: orderCart,
+            set: setOrderCart
+          }
         },
         viewed: {
           val: viewed,

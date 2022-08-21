@@ -37,7 +37,7 @@ const NavBar = () => {
                     lineHeight: '1.1', fontStyle: 'normal', left: '95%'
                   }}
                 >
-                  {store?.cart.val.length}
+                  {store ? store.cart.stock.val.length + store.cart.order.val.length : 0}
                 </div>
               </i>
               <div className="text-secondary" style={{ fontSize: '11px' }}>Кошик</div>

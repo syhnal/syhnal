@@ -11,12 +11,14 @@ type CardProps = {
 
   dataBsToggle?: string
   dataBsTarget?: string
+  onCardClick?: MouseEventHandler
 }
 
-const Card = ({ img, header, content, onBtnClick, btnLabel, btnColor, dataBsTarget, dataBsToggle }: CardProps) => {
+const Card = ({ img, header, content, onBtnClick, btnLabel, btnColor, onCardClick, dataBsTarget, dataBsToggle }: CardProps) => {
   return (
     <div className="card border-0">
       <div data-bs-toggle={dataBsToggle} data-bs-target={dataBsTarget}
+        onClick={onCardClick}
         style={{ cursor: dataBsToggle ? "pointer" : "default" }}>
         <img src={img} className="card-img-top" alt="" />
         <hr className="p-0 m-0" />

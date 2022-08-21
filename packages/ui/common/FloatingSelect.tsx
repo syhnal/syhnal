@@ -26,7 +26,7 @@ const FloatingSelect = ({ id, label, options, val, setVal }: FloatingSelectProps
       <div className="dropdown-menu overflow-hidden p-0 w-100">
         <div className="overflow-auto" style={{ maxHeight: "40vh" }}>
           {options.map(option =>
-            <li onClick={() => setVal(option)} className="dropdown-item user-select-none">
+            <li key={`option-${option}`} onClick={() => setVal(option)} className="dropdown-item user-select-none">
               {option}
             </li>
           )}

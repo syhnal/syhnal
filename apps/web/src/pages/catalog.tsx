@@ -13,7 +13,6 @@ const CatalogPage: NextPage<CatalogProps> = ({ products }) => {
   return (
     <div>
       <Title val="Каталог" />
-      <NavBar />
 
       <div className="container-xl">
         <ProductList items={products} />

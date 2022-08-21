@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { FC } from 'react'
 import { Footer } from '../navigation/Footer'
+import { NavBar } from '../navigation/NavBar'
 
 const Layout: FC = ({ children }) => {
   return (
@@ -18,6 +19,8 @@ const Layout: FC = ({ children }) => {
 
       <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossOrigin="anonymous" />
+
+      <NavBar />
 
       {children}
 

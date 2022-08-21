@@ -18,7 +18,7 @@ const Banner = () => {
           style={{ fontSize: '5.4vw', fontWeight: 800 }}>
           Автозапчастини<br />під замовлення
         </h1>
-        <Link href='/order'>
+        <Link href='/custom'>
           <a className='btn btn-light btn-lg mt-2'>Замовити</a>
         </Link>
       </div>

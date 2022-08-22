@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { FloatingInput, FloatingSelect } from "ui";
 import { NavBar, Title } from "../components";
-import { GetStaticProps } from "next";
+import { GetStaticProps } from '../utils'
 import { getClient } from "../utils/cms/sanity.server";
 import groq from "groq";
 import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";

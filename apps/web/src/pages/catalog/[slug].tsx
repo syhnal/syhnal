@@ -1,7 +1,8 @@
 import groq from "groq"
 import { Product, Category, toCategoryList, toProductList } from "logic"
-import { GetStaticPaths, GetStaticProps, NextPage } from "next"
+import { GetStaticPaths, NextPage } from "next"
 import { ProductList, Title } from "../../components"
+import { GetStaticProps } from "../../utils"
 import { getClient } from "../../utils/cms/sanity.server"
 
 interface CategoryCatalogProps {
@@ -45,6 +46,7 @@ const getStaticPaths: GetStaticPaths = async () => {
     fallback: "blocking"
   }
 }
+
 
 const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
   const client = getClient(preview)

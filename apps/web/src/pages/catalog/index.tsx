@@ -1,6 +1,7 @@
 import groq from "groq";
 import { Product, Category, toCategoryList, toProductList } from "logic";
-import { GetStaticProps, NextPage } from "next";
+import { NextPage } from "next";
+import { GetStaticProps } from '../../utils'
 import { NavBar, Title } from "../../components";
 import { ProductList } from "../../components/content/ProductList";
 import { getClient } from "../../utils/cms/sanity.server";

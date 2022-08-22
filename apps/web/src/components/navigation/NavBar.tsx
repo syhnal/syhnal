@@ -25,7 +25,7 @@ const NavBar = ({ categories }: NavBarProps) => {
           </div>
 
           <div className="d-flex align-items-center">
-            <button className="btn btn-outline-primary btn-lg"
+            <button className="btn btn-outline-primary btn-lg shadow-none"
               data-bs-toggle="collapse" data-bs-target="#navbarCategories"
               aria-expanded="false" aria-controls="navbarCategories">
               Каталог
@@ -42,11 +42,23 @@ const NavBar = ({ categories }: NavBarProps) => {
         </div>
       </div>
       <div className="collapse position-absolute bg-white w-100" id="navbarCategories" style={{ zIndex: 1 }}>
-        <div className="container-xl">
-          {/* {categories.map(category => <div>category</div>)} */}
+        <div className="container-xl py-4">
+          <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
+            {categories.map(category =>
+              <div key={category.id}
+                data-bs-toggle="collapse" data-bs-target="#navbarCategories"
+                aria-expanded="false" aria-controls="navbarCategories">
+                <Link href={`/catalog/${category.slug}`}>
+                  <div style={{ cursor: "pointer" }}>
+                    {category.title.ua}
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </nav>
+      </div >
+    </nav >
   )
 }
 

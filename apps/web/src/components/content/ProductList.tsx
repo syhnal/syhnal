@@ -35,7 +35,7 @@ const ProductList = ({ items }: IProductListProps) => {
           <div className="col" key={item.id}>
             <Card
               img={urlFor(item.img).url()}
-              header={`${item.price.from} - ${item.price.to} грн`}
+              header={`Від ${item.price.from} грн`}
               content={item.title.ua}
 
               onBtnClick={() => toCart(item)}

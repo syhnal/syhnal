@@ -1,15 +1,14 @@
 import type { NextPage } from 'next'
-import { Article, Card } from 'ui'
-import { Banner, BrandList, NavBar, Title } from '../components'
-import { GetStaticProps } from 'next'
+import { Article } from 'ui'
+import { Banner, BrandList, Title } from '../components'
 import { getClient } from '../utils/cms/sanity.server'
 import groq from 'groq'
-import { Brand, Category, Product, toBrandList, toCategory, toCategoryList, toProductList, uniqueBrand } from 'logic'
+import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
 import { ProductList } from '../components/content/ProductList'
 import Link from 'next/link'
 import { urlFor } from '../utils/cms/sanity'
-import { Viewed } from '../components/content/Viewed'
-import { type } from 'os'
+import { Viewed } from '../components/content/home/Viewed'
+import { GetStaticProps } from '../utils'
 
 interface IHomeProps {
   novelty: Product[]

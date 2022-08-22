@@ -1,6 +1,7 @@
 import groq from "groq"
 import { Product, tgSendMessage, toCategoryList, Category, toProduct } from "logic"
-import { GetStaticPaths, GetStaticProps, NextPage } from "next"
+import { GetStaticPaths, NextPage } from "next"
+import { GetStaticProps } from '../../utils'
 import Image from "next/image"
 import { useState } from "react"
 import { NavBar, Person, Title } from "../../components"
@@ -35,7 +36,7 @@ ${product.title.ua}
 Телефон: ${phone}
 `
 
-      tgSendMessage(text, tgConfig.token)
+      tgSendMessage(text, tgConfig.token, tgConfig.chat)
     } else {
       alert("Усі поля моють бути заповненими")
     }

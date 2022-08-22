@@ -1,5 +1,5 @@
-import { useStoreContext } from "../../utils/store"
-import { ProductList } from "./ProductList"
+import { useStoreContext } from "../../../utils/store"
+import { ProductList } from "../ProductList"
 
 const Viewed = () => {
   const store = useStoreContext()

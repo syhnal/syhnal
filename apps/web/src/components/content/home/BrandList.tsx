@@ -1,7 +1,7 @@
 import { Brand } from "logic"
 import Image from "next/image"
 import Link from "next/link"
-import { urlFor } from "../../utils/cms/sanity"
+import { urlFor } from "../../../utils/cms/sanity"
 
 interface BrandsProps {
   items: Brand[]

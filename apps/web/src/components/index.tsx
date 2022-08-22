@@ -2,14 +2,23 @@
 export * from './layout/Layout'
 export * from './layout/Title'
 
+
 // navigation
 export * from './navigation/NavBar'
 export * from './navigation/Footer'
 
+
 // content
-export * from './content/Banner'
-export * from './content/BrandList'
-export * from "./content/Person"
+
+/// cart
+export * from "./content/cart/StockItem"
+export * from "./content/cart/OrderItem"
+export * from "./content/cart/Person"
+
+/// home
+export * from "./content/home/Banner"
+export * from "./content/home/BrandList"
+
 export * from "./content/ProductList"
 export * from "./content/ProductModal"
-export * from "./content/Viewed"
+export * from "./content/home/Viewed"

@@ -1,12 +1,9 @@
 import groq from "groq"
 import { toProductList, Product, toCategoryList, Category } from "logic"
 import { NextPage } from "next"
-import { GetStaticProps } from 'next'
-import Image from "next/image"
+import { GetStaticProps } from '../utils'
 import { useState } from "react"
-import { FloatingInput } from "ui"
-import { NavBar, Person, Title } from "../components"
-import { urlFor } from "../utils/cms/sanity"
+import { OrderItem, Person, StockItem, Title } from "../components"
 import { getClient } from "../utils/cms/sanity.server"
 import { useStoreContext } from "../utils/store"
 
@@ -30,33 +27,19 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
       })
       return sum
     }
-
     return 0
   }
 
-  const removeFromStock = (val: string) => {
-    if (store) store.cart.stock.set(store.cart.stock.val.filter(id => id.val != val))
-  }
 
   const removeFromOrder = (name: string) => {
     if (store) store.cart.order.set(store.cart.order.val.filter(product => product.val.name != name))
-  }
-
-  const incrementStockItem = (id: string) => {
-    if (store) store.cart.stock.set(store.cart.stock.val.map(item =>
-      item.val == id ? { val: item.val, count: item.count + 1 } : item))
-  }
-
-  const decrementStockItem = (id: string) => {
-    if (store) store.cart.stock.set(store.cart.stock.val.map(item =>
-      item.val == id && item.count > 1 ? { val: item.val, count: item.count - 1 } : item))
   }
 
   return (
     <div>
       <Title val="Корзина" />
 
-      <div className="container-xl" style={{ minHeight: "68vh" }}>
+      <div className="container-xl" style={{ minHeight: "65vh" }}>
         {store && (store.cart.order.val.length > 0 || store.cart.stock.val.length > 0)
           ? <div className="row">
             <div className="col">
@@ -71,34 +54,7 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
 
                       return product ? (
                         <li key={item.val} className="list-group-item px-0">
-                          <div className="row align-items-center">
-                            <div className="col-6 d-flex align-items-center">
-                              <Image src={urlFor(product.img).url()} alt="" width={80} height={80} />
-                              <h6 className="m-0 ms-4">{product.title.ua}</h6>
-                            </div>
-
-                            <div className="col-3">
-                              <div className="d-flex justify-content-center  align-items-center">
-                                <i className={`bi bi-dash-lg fs-4 px-2 ${item.count == 1 ? "text-muted" : null}`}
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => decrementStockItem(item.val)} />
-                                <span className="user-select-none" style={{ fontWeight: 500 }}>
-                                  {item.count}
-                                </span>
-                                <i className="bi bi-plus-lg fs-4 px-2" style={{ cursor: "pointer" }}
-                                  onClick={() => incrementStockItem(item.val)} />
-                              </div>
-                            </div>
-
-                            <div className="col-3 d-flex justify-content-between align-items-center">
-                              <span style={{ fontWeight: 500 }}>
-                                від {product.price.from * item.count} грн
-                              </span>
-
-                              <i className="bi bi-x-lg py-3 ps-3" style={{ cursor: "pointer" }}
-                                onClick={() => removeFromStock(item.val)} />
-                            </div>
-                          </div>
+                          <StockItem count={item.count} product={product} />
                         </li>
                       ) : null
                     })}
@@ -113,14 +69,8 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
                   <ul className="list-group list-group-flush">
                     {store?.cart.order.val.map(product =>
                       product ? (
-                        <li key={product.val.name} className="list-group-item px-0 d-flex justify-content-between align-items-center">
-                          <h6>{product.val.name}</h6>
-                          <div>
-                            - 1 +
-                          </div>
-                          <i className="bi bi-x-lg py-3 ps-3" style={{ cursor: "pointer" }}
-                            onClick={() => removeFromOrder(product.val.name)} />
-                          {/* <Image src={urlFor(product.img).url()} width={50} height={50} /> */}
+                        <li key={product.val.name} className="list-group-item px-0">
+                          <OrderItem product={product} />
                         </li>
                       ) : null
                     )}
@@ -156,7 +106,7 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
 
           </div>
           : <h2 className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
-            Ваш кошик досі порожній
+            Ваш кошик порожній
           </h2>
         }
       </div>

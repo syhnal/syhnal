@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction } from "react"
 import { FloatingInput } from "ui"
-import { StateProp } from "../../utils/types"
+import { StateProp } from "../../../utils/types"
 
 interface PersonProps {
   name: StateProp<string>

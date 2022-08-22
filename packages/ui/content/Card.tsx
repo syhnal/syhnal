@@ -23,7 +23,7 @@ const Card = ({ img, header, content, onBtnClick, btnLabel, btnColor, onCardClic
         <img src={img} className="card-img-top" alt="" />
         <hr className="p-0 m-0" />
       </div>
-      <div className="card-body">
+      <div className="card-body px-0">
         <h5 className="card-title">{header}</h5>
         <p className="card-text">{content}</p>
         {btnLabel

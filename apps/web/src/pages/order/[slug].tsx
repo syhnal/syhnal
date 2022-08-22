@@ -1,13 +1,16 @@
+// installed
 import groq from "groq"
-import { Product, tgSendMessage, toCategoryList, Category, toProduct } from "logic"
 import { GetStaticPaths, NextPage } from "next"
-import { GetStaticProps } from '../../utils'
 import Image from "next/image"
 import { useState } from "react"
-import { NavBar, Person, Title } from "../../components"
-import { urlFor } from "../../utils/cms/sanity"
-import { getClient } from "../../utils/cms/sanity.server"
-import { tgConfig } from "../../utils/telegram/config"
+
+// shared
+import { Product, tgSendMessage, toCategoryList, Category, toProduct } from "logic"
+
+// local
+import { tgConfig, getClient, urlFor, GetStaticProps } from '../../utils'
+import { Person, Title } from "../../components"
+
 
 interface OrderPageProps {
   product: Product

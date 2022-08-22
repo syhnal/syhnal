@@ -1,9 +1,14 @@
-import groq from "groq"
-import { Product, Category, toCategoryList, toProductList } from "logic"
+// installed
 import { GetStaticPaths, NextPage } from "next"
+import groq from "groq"
+
+// shared
+import { Product, Category, toCategoryList, toProductList } from "logic"
+
+// local
 import { ProductList, Title } from "../../components"
-import { GetStaticProps } from "../../utils"
-import { getClient } from "../../utils/cms/sanity.server"
+import { getClient, GetStaticProps } from "../../utils"
+
 
 interface CategoryCatalogProps {
   products: Product[]

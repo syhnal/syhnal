@@ -1,14 +1,16 @@
+// installed
 import type { NextPage } from 'next'
-import { Article } from 'ui'
-import { Banner, BrandList, Title } from '../components'
-import { getClient } from '../utils/cms/sanity.server'
-import groq from 'groq'
-import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
-import { ProductList } from '../components/content/ProductList'
 import Link from 'next/link'
-import { urlFor } from '../utils/cms/sanity'
-import { Viewed } from '../components/content/home/Viewed'
-import { GetStaticProps } from '../utils'
+import groq from 'groq'
+
+// shared
+import { Article } from 'ui'
+import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
+
+// local
+import { Banner, BrandList, Title, ProductList, Viewed } from '../components'
+import { GetStaticProps, urlFor, getClient } from '../utils'
+
 
 interface IHomeProps {
   novelty: Product[]
@@ -90,7 +92,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const client = getClient(preview)
 
   const novelty = await client
@@ -110,13 +112,13 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     .fetch(groq`*[_type == 'category'] | order(orders asc)[0...10]`)
     .then<Category[]>(toCategoryList)
 
-  const popularProducts = await client.fetch(groq`*[_type == 'product'] | order(orders asc)[0...10]`)
+  const popularProducts = await client
+    .fetch(groq`*[_type == 'product'] | order(orders asc)[0...10]`)
     .then<Product[]>(toProductList)
 
-  const categories = await client
-    .fetch(groq`*[_type == 'category']`)
+  const categories = await client.
+    fetch(groq`*[_type == 'category']`)
     .then<Category[]>(toCategoryList)
-
 
   return {
     props: {
@@ -136,3 +138,4 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
 }
 
 export default HomePage
+export { getStaticProps }

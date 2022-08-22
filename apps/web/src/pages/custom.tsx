@@ -1,12 +1,16 @@
+// installed
 import { NextPage } from "next";
-import { FloatingInput, FloatingSelect } from "ui";
-import { NavBar, Title } from "../components";
-import { GetStaticProps } from '../utils'
-import { getClient } from "../utils/cms/sanity.server";
 import groq from "groq";
-import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
 import { useState } from "react";
-import { useStoreContext } from "../utils/store";
+
+// shared
+import { FloatingInput, FloatingSelect } from "ui";
+import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
+
+// local
+import { Title } from "../components";
+import { GetStaticProps, getClient, useStoreContext } from '../utils'
+
 
 interface CustomPageProps {
   years: number[]
@@ -62,7 +66,7 @@ const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const client = getClient(preview)
 
   const brands = await client
@@ -87,3 +91,4 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
 }
 
 export default CustomPage
+export { getStaticProps }

@@ -1,10 +1,10 @@
 import { createClient } from "next-sanity";
-import { clientConfig } from "./config";
+import { sanityClientConfig } from "./config";
 
-const sanityClient = createClient(clientConfig)
+const sanityClient = createClient(sanityClientConfig)
 
 const previewClient = createClient({
-  ...clientConfig,
+  ...sanityClientConfig,
   useCdn: false,
   token: process.env.NEXT_PUBLIC_SANITY_TOKEN
 })

@@ -1,11 +1,11 @@
-import '../styles/globals.css'
+// installed
 import type { AppProps } from 'next/app'
-import { Layout } from '../components/layout/Layout'
-import { StoreProvider } from '../utils/store'
-import { GetStaticProps } from 'next'
-import { getClient } from '../utils/cms/sanity.server'
-import groq from 'groq'
-import { Category, toCategoryList } from 'logic'
+
+// local
+import '../styles/globals.css'
+import { Layout } from '../components'
+import { StoreProvider } from '../utils'
+
 
 const SyhnalApp = ({ Component, pageProps }: AppProps) => {
   // <Layout categories={pageProps.categories}>
@@ -19,6 +19,5 @@ const SyhnalApp = ({ Component, pageProps }: AppProps) => {
     </StoreProvider>
   )
 }
-
 
 export default SyhnalApp

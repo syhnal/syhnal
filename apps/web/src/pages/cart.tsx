@@ -1,11 +1,15 @@
-import groq from "groq"
-import { toProductList, Product, toCategoryList, Category } from "logic"
+// installed
 import { NextPage } from "next"
-import { GetStaticProps } from '../utils'
 import { useState } from "react"
+import groq from "groq"
+
+// shared
+import { toProductList, Product, toCategoryList, Category } from "logic"
+
+// local
+import { useStoreContext, getClient, GetStaticProps } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
-import { getClient } from "../utils/cms/sanity.server"
-import { useStoreContext } from "../utils/store"
+
 
 interface ICartProps {
   products: Product[]
@@ -30,11 +34,6 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
     return 0
   }
 
-
-  const removeFromOrder = (name: string) => {
-    if (store) store.cart.order.set(store.cart.order.val.filter(product => product.val.name != name))
-  }
-
   return (
     <div>
       <Title val="Корзина" />
@@ -52,11 +51,11 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
                     {store?.cart.stock.val.map(item => {
                       const product = products.find(data => data.id == item.val)
 
-                      return product ? (
+                      return product ?
                         <li key={item.val} className="list-group-item px-0">
                           <StockItem count={item.count} product={product} />
                         </li>
-                      ) : null
+                        : null
                     })}
                   </ul>
                 </div>
@@ -114,7 +113,7 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const client = getClient(preview)
 
   const products = await client.fetch(
@@ -135,3 +134,4 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
 }
 
 export default Cart
+export { getStaticProps }

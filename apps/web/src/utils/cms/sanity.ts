@@ -1,10 +1,10 @@
 import { createPreviewSubscriptionHook, createCurrentUserHook } from 'next-sanity'
 import createImageUrlBuilder from '@sanity/image-url'
-import { config } from './config'
+import { sanityConfig } from './config'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
-export const urlFor = (source: SanityImageSource) => createImageUrlBuilder(config).image(source)
+export const urlFor = (source: SanityImageSource) => createImageUrlBuilder(sanityConfig).image(source)
 
-export const usePreviewSubscription = createPreviewSubscriptionHook(config)
+export const usePreviewSubscription = createPreviewSubscriptionHook(sanityConfig)
 
-export const useCurrentUser = createCurrentUserHook(config)
+export const useCurrentUser = createCurrentUserHook(sanityConfig)

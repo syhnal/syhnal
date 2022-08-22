@@ -1,5 +1,5 @@
 import groq from "groq"
-import { Product, tgSendMessage, toProduct } from "logic"
+import { Product, tgSendMessage, toCategoryList, Category, toProduct } from "logic"
 import { GetStaticPaths, GetStaticProps, NextPage } from "next"
 import Image from "next/image"
 import { useState } from "react"
@@ -102,12 +102,21 @@ const getStaticPaths: GetStaticPaths = async () => {
 }
 
 const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
-  const product = await getClient(preview)
+  const client = getClient(preview)
+
+  const product = await client
     .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]`)
     .then<Product>(data => toProduct(data))
 
+  const categories = await client
+    .fetch(groq`*[_type == 'category']`)
+    .then<Category[]>(toCategoryList)
+
   return {
-    props: { product },
+    props: {
+      product,
+      categories
+    },
     revalidate: 10
   }
 }

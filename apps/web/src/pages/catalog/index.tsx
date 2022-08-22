@@ -1,5 +1,5 @@
 import groq from "groq";
-import { Product, toProductList } from "logic";
+import { Product, Category, toCategoryList, toProductList } from "logic";
 import { GetStaticProps, NextPage } from "next";
 import { NavBar, Title } from "../../components";
 import { ProductList } from "../../components/content/ProductList";
@@ -28,9 +28,14 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     groq`*[_type == 'product']`
   ).then<Product[]>(toProductList)
 
+  const categories = await client
+    .fetch(groq`*[_type == 'category']`)
+    .then<Category[]>(toCategoryList)
+
   return {
     props: {
-      products
+      products,
+      categories
     },
     revalidate: 10,
   }

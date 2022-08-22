@@ -9,6 +9,7 @@ import { ProductList } from '../components/content/ProductList'
 import Link from 'next/link'
 import { urlFor } from '../utils/cms/sanity'
 import { Viewed } from '../components/content/Viewed'
+import { type } from 'os'
 
 interface IHomeProps {
   novelty: Product[]
@@ -113,6 +114,11 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const popularProducts = await client.fetch(groq`*[_type == 'product'] | order(orders asc)[0...10]`)
     .then<Product[]>(toProductList)
 
+  const categories = await client
+    .fetch(groq`*[_type == 'category']`)
+    .then<Category[]>(toCategoryList)
+
+
   return {
     props: {
       novelty,
@@ -123,7 +129,8 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
       popular: {
         categories: popularCategories,
         products: popularProducts
-      }
+      },
+      categories
     },
     revalidate: 10,
   }

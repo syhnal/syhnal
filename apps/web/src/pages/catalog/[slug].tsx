@@ -1,5 +1,5 @@
 import groq from "groq"
-import { Product, toProductList } from "logic"
+import { Product, Category, toCategoryList, toProductList } from "logic"
 import { GetStaticPaths, GetStaticProps, NextPage } from "next"
 import { ProductList, Title } from "../../components"
 import { getClient } from "../../utils/cms/sanity.server"
@@ -56,10 +56,15 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
   const category = await client
     .fetch(groq`*[_type == 'category' && slug.current == '${params?.slug}'][0]{...title}`)
 
+  const categories = await client
+    .fetch(groq`*[_type == 'category']`)
+    .then<Category[]>(toCategoryList)
+
   return {
     props: {
       products,
-      category
+      category,
+      categories
     },
     revalidate: 10
   }

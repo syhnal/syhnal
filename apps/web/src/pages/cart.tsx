@@ -1,5 +1,5 @@
 import groq from "groq"
-import { toProductList, Product } from "logic"
+import { toProductList, Product, toCategoryList, Category } from "logic"
 import { NextPage } from "next"
 import { GetStaticProps } from 'next'
 import Image from "next/image"
@@ -171,9 +171,14 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     groq`*[_type == 'product']`
   ).then<Product[]>(toProductList)
 
+  const categories = await client
+    .fetch(groq`*[_type == 'category']`)
+    .then<Category[]>(toCategoryList)
+
   return {
     props: {
       products,
+      categories
     },
     revalidate: 10,
   }

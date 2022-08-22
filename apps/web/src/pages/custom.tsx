@@ -4,7 +4,7 @@ import { NavBar, Title } from "../components";
 import { GetStaticProps } from "next";
 import { getClient } from "../utils/cms/sanity.server";
 import groq from "groq";
-import { Brand, Car, toBrandList } from "logic";
+import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
 import { useState } from "react";
 import { useStoreContext } from "../utils/store";
 
@@ -72,10 +72,15 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const current = (new Date()).getFullYear()
   const years = [...Array(200).keys()].map(num => current - num)
 
+  const categories = await client
+    .fetch(groq`*[_type == 'category']`)
+    .then<Category[]>(toCategoryList)
+
   return {
     props: {
       years,
-      brands
+      brands,
+      categories
     },
     revalidate: 10,
   }

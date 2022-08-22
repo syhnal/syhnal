@@ -4,10 +4,10 @@ import { useState } from "react"
 import groq from "groq"
 
 // shared
-import { toProductList, Product, toCategoryList, Category } from "logic"
+import { toProductList, Product, toCategoryList, Category, tgSendMessage } from "logic"
 
 // local
-import { useStoreContext, getClient, GetStaticProps } from '../utils'
+import { useStoreContext, getClient, GetStaticProps, tgConfig } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
 
@@ -32,6 +32,50 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
       return sum
     }
     return 0
+  }
+
+  const order = () => {
+    const trim = {
+      name: name.trim(),
+      surname: surname.trim(),
+      phone: phone.trim()
+    }
+
+    if (trim.name != "" && trim.surname != "") {
+      let text = `${surname} ${name} бажає замовити:\n`
+
+      if (store) {
+        if (store.cart.stock.val.length > 0) {
+          text += `Товари в наявності:
+${store.cart.stock.val.map(item => {
+            const product = products.find(product => item.val == product.id)
+            const line = product ? `${product.title.ua} кіл-ть: ${item.count}` : ""
+            console.log(line)
+            return line
+          }).join("\n")
+            }`
+        }
+
+        if (store.cart.order.val.length > 0) {
+          text += `\nТовари на замовлення:          
+${store.cart.order.val.map(item =>
+            `--------
+${item.val.name} 
+Кіл-ть: ${item.count}
+Для авто:
+VIN: ${item.val.car.vin}
+Модель: ${item.val.car.model}
+Марка: ${item.val.car.brand}
+Рік: ${item.val.car.year}`
+          )
+            }`
+        }
+
+        text += `\n---------\nТелефон: ${phone}`
+
+        tgSendMessage(text, tgConfig)
+      }
+    }
   }
 
   return (
@@ -93,7 +137,7 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
                     {store?.cart.stock.val.length}{store && store.cart.order.val.length > 0 ? ` + ${store?.cart.order.val.length}` : ""} товари
                   </small>
                   <h3 className="fw-bold text-primary my-3">від {price()} грн</h3>
-                  <button className="btn btn-primary">Замовити</button>
+                  <button className="btn btn-primary" onClick={order}>Замовити</button>
                 </div>
                 <div className="px-3">
                   <small>

@@ -39,7 +39,7 @@ ${product.title.ua}
 Телефон: ${phone}
 `
 
-      tgSendMessage(text, tgConfig.token, tgConfig.chat)
+      tgSendMessage(text, tgConfig)
     } else {
       alert("Усі поля моють бути заповненими")
     }

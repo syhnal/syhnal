@@ -1,5 +1,8 @@
+// telegram
 export * from "./telegram/send"
+export * from "./telegram/config"
 
+// types
 export * from './types/product'
 export * from './types/brand'
 export * from "./types/category"

@@ -161,7 +161,7 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const client = getClient(preview)
 
   const products = await client.fetch(
-    groq`*[_type == 'product']`
+    groq`*[_type == 'product']{..., brand->}`
   ).then<Product[]>(toProductList)
 
   const categories = await client

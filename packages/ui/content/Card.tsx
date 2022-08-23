@@ -20,8 +20,13 @@ const Card = ({ img, header, content, onBtnClick, btnLabel, btnColor, onCardClic
       <div data-bs-toggle={dataBsToggle} data-bs-target={dataBsTarget}
         onClick={onCardClick}
         style={{ cursor: dataBsToggle ? "pointer" : "default" }}>
-        <img src={img} className="card-img-top" alt="" />
-        <hr className="p-0 m-0" />
+
+        {img ?
+          <div>
+            <img src={img} className="card-img-top" alt="" />
+            <hr className="p-0 m-0" />
+          </div>
+          : null}
       </div>
       <div className="card-body px-0">
         <h5 className="card-title">{header}</h5>

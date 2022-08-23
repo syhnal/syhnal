@@ -57,7 +57,7 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
   const client = getClient(preview)
 
   const products = await client
-    .fetch(groq`*[_type == 'product' && category->slug.current == '${params?.slug}']`)
+    .fetch(groq`*[_type == 'product' && category->slug.current == '${params?.slug}']{..., brand->}`)
     .then<Product[]>(data => toProductList(data))
 
   const category = await client

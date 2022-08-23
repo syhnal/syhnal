@@ -1,17 +1,21 @@
 export interface Brand {
   id: string
   title: string
-  img: any
+  img?: any
   slug: string
 }
 
 const toBrand = (data: any): Brand => {
-  return {
+  let brand = {
     id: data._id,
     title: data.title,
     img: data.img,
     slug: data.slug.current
   }
+
+  if (data.hasOwnProperty("img")) brand.img = data.img
+
+  return brand
 }
 
 const toBrandList = (dataList: any): Brand[] => dataList.map((data: any) => toBrand(data))

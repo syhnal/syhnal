@@ -1,5 +1,6 @@
 import { Category } from "logic"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { IconInput } from "ui"
 import { useStoreContext } from "../../utils/store"
 import { CartLink } from "./CartLink"
@@ -10,6 +11,10 @@ interface NavBarProps {
 
 const NavBar = ({ categories }: NavBarProps) => {
   const store = useStoreContext()
+  const router = useRouter()
+
+  const search = () => router.push("/catalog")
+
 
   return (
     <nav className="mb-3">
@@ -35,8 +40,9 @@ const NavBar = ({ categories }: NavBarProps) => {
                 СИГНАЛ
               </a>
             </Link>
-            <IconInput icon="search" placeholder="Пошук" />
-
+            {store ?
+              <IconInput icon="search" placeholder="Пошук" val={store.search.start.val} setVal={store.search.start.set} enterClick={search} />
+              : null}
             <CartLink count={store ? store.cart.stock.val.length + store.cart.order.val.length : 0} />
           </div>
         </div>

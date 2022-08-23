@@ -8,6 +8,10 @@ interface IStoreContext {
     order: StateProp<CartItem<OrderProduct>[]>
   }
   car: StateProp<Car>
+  search: {
+    start: StateProp<string>
+    brand: StateProp<string>
+  }
   viewed: StateProp<Product[]>
 }
 
@@ -20,6 +24,10 @@ const StoreProvider: FC = ({ children }) => {
   const [car, setCar] = useState<Car>({
     brand: "", model: "", vin: "", year: 2022
   })
+
+  const [start, setStart] = useState<string>("")
+  const [brand, setBrand] = useState<string>("")
+
 
   return (
     <StoreContext.Provider
@@ -34,6 +42,16 @@ const StoreProvider: FC = ({ children }) => {
             set: setOrderCart
           }
         },
+        search: {
+          start: {
+            val: start,
+            set: setStart
+          },
+          brand: {
+            val: brand,
+            set: setBrand
+          }
+        },
         car: {
           val: car,
           set: setCar
@@ -45,7 +63,7 @@ const StoreProvider: FC = ({ children }) => {
       }}
     >
       {children}
-    </StoreContext.Provider>
+    </StoreContext.Provider >
   )
 }
 

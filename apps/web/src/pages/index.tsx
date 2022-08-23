@@ -8,7 +8,7 @@ import { Article } from 'ui'
 import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
 
 // local
-import { Banner, BrandList, Title, ProductList, Viewed, CustomBrandList } from '../components'
+import { Banner, StockBrandList, Title, ProductList, Viewed, CustomBrandList } from '../components'
 import { GetStaticProps, urlFor, getClient } from '../utils'
 
 
@@ -40,7 +40,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
         <div className='my-5 row row-cols-1 row-cols-md-2 g-5'>
           <div className='col pe-md-5'>
             <h2 className='mb-3'>В наявності</h2>
-            <BrandList link='/' items={brands.stock} />
+            <StockBrandList items={brands.stock} />
           </div>
           <div className='col ps-md-5'>
             <h2 className='mb-3'>Під замовлення</h2>
@@ -60,11 +60,10 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
               <Link href={`/catalog/${category.slug}`} key={category.id}>
                 <a className='col'>
                   <div className='card border-0'>
-                    <img src={urlFor(category.img).url()} className="card-img-top" alt="" />
+                    {category.img ?
+                      <img src={urlFor(category.img).url()} className="card-img-top" alt="" />
+                      : null}
                     <h5 className='card-title text-center'>{category.title.ua}</h5>
-                    {/* <div className='card-body'>
-                      <h5 className='card-title text-center'>{category.title.ua}</h5>
-                    </div> */}
                   </div>
                 </a>
               </Link>
@@ -96,7 +95,7 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const client = getClient(preview)
 
   const novelty = await client
-    .fetch(groq`*[_type == 'product'] | order(_createdAt asc)[0...5]`)
+    .fetch(groq`*[_type == 'product'] | order(_createdAt asc)[0...5]{..., brand->}`)
     .then<Product[]>(toProductList)
 
   const stockBrands = await client
@@ -113,7 +112,7 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     .then<Category[]>(toCategoryList)
 
   const popularProducts = await client
-    .fetch(groq`*[_type == 'product'] | order(orders asc)[0...10]`)
+    .fetch(groq`*[_type == 'product'] | order(orders asc)[0...10]{..., brand->}`)
     .then<Product[]>(toProductList)
 
   const categories = await client.

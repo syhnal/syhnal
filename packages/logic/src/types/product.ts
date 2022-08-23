@@ -1,3 +1,5 @@
+import { Brand, toBrand } from "./brand"
+
 export interface Product {
   id: string
   title: {
@@ -9,7 +11,8 @@ export interface Product {
     to: number
   }
   slug: string
-  img: any,
+  img?: any
+  brand: Brand
 }
 
 // const compareByTime(a: Product, b: Product):boolean => 
@@ -49,7 +52,7 @@ export interface Product {
 */
 
 const toProduct = (data: any): Product => {
-  return {
+  let product: Product = {
     id: data._id,
     title: {
       ua: data.title.ua,
@@ -60,8 +63,12 @@ const toProduct = (data: any): Product => {
       to: data.price.to
     },
     slug: data.slug.current,
-    img: data.img
+    brand: toBrand(data.brand)
   }
+
+  if (data.hasOwnProperty("img")) product.img = data.img
+
+  return product
 }
 
 const toProductList = (data: any): Product[] =>

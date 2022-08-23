@@ -53,7 +53,9 @@ ${product.title.ua}
         <h2>Замовити в один клік</h2>
         <div className="row align-items-center">
           <div className="col-6 d-flex align-items-center">
-            <Image src={urlFor(product.img).url()} alt="" width={80} height={80} />
+            {product.img ?
+              <Image src={urlFor(product.img).url()} alt="" width={80} height={80} />
+              : null}
             <h6 className="m-0 ms-4">{product.title.ua}</h6>
           </div>
 
@@ -109,7 +111,7 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
   const client = getClient(preview)
 
   const product = await client
-    .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]`)
+    .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]{..., brand->}`)
     .then<Product>(data => toProduct(data))
 
   const categories = await client

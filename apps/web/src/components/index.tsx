@@ -18,6 +18,7 @@ export * from "./content/cart/Person"
 /// home
 export * from "./content/home/Banner"
 export * from "./content/home/BrandList"
+export * from "./content/home/CustomBrandList"
 
 export * from "./content/ProductList"
 export * from "./content/ProductModal"

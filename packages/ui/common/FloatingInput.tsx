@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, useRef } from "react"
 interface FloatingInputProps {
   label: string
   val: string,
-  setVal: Dispatch<SetStateAction<string>>
-  check?: (val: string) => boolean
+  setVal: (value: string) => void
+  check?: (value: string) => boolean
 }
 
 const FloatingInput = ({ label, val, setVal, check }: FloatingInputProps) => {

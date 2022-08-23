@@ -2,7 +2,7 @@ import { SanityProjectDetails } from "@sanity/image-url/lib/types/types";
 import { ClientConfig } from "next-sanity";
 
 const sanityConfig: SanityProjectDetails = {
-  dataset: 'production',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 }
 

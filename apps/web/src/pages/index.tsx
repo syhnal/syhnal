@@ -8,7 +8,7 @@ import { Article } from 'ui'
 import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
 
 // local
-import { Banner, BrandList, Title, ProductList, Viewed } from '../components'
+import { Banner, BrandList, Title, ProductList, Viewed, CustomBrandList } from '../components'
 import { GetStaticProps, urlFor, getClient } from '../utils'
 
 
@@ -44,7 +44,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
           </div>
           <div className='col ps-md-5'>
             <h2 className='mb-3'>Під замовлення</h2>
-            <BrandList link='/order' items={brands.order} />
+            <CustomBrandList items={brands.order} />
           </div>
         </div>
 

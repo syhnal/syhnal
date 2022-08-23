@@ -52,8 +52,8 @@ ${store.cart.stock.val.map(item => {
             const line = product ? `${product.title.ua} кіл-ть: ${item.count}` : ""
             console.log(line)
             return line
-          }).join("\n")
-            }`
+          }).join("\n")}
+Всьго від ${price()} грн`
         }
 
         if (store.cart.order.val.length > 0) {
@@ -137,7 +137,7 @@ VIN: ${item.val.car.vin}
                     {store?.cart.stock.val.length}{store && store.cart.order.val.length > 0 ? ` + ${store?.cart.order.val.length}` : ""} товари
                   </small>
                   <h3 className="fw-bold text-primary my-3">від {price()} грн</h3>
-                  <button className="btn btn-primary" onClick={order}>Замовити</button>
+                  <button className="btn btn-primary shadow-none" onClick={order}>Замовити</button>
                 </div>
                 <div className="px-3">
                   <small>

@@ -1,14 +1,11 @@
-import { Dispatch, SetStateAction, useRef, useState } from "react"
-
 interface FloatingSelectProps {
-  id: string
   label: string
   options: any[]
   val: any
-  setVal: Dispatch<SetStateAction<any>>
+  setVal: (value: any) => void
 }
 
-const FloatingSelect = ({ id, label, options, val, setVal }: FloatingSelectProps) => {
+const FloatingSelect = ({ label, options, val, setVal }: FloatingSelectProps) => {
   return (
     <div className="dropdown">
       <div className="rounded-3 border px-4 py-3 d-flex justify-content-between align-items-center user-select-none"

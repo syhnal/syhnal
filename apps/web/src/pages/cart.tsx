@@ -41,25 +41,34 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
       phone: phone.trim()
     }
 
-    if (trim.name != "" && trim.surname != "") {
-      let text = `${surname} ${name} бажає замовити:\n`
+    if (phone.length < 13) {
+      alert("Будь ласка, перевірте номер телефону. Кількість цифр не є правильною.")
+      return
+    }
 
-      if (store) {
-        if (store.cart.stock.val.length > 0) {
-          text += `Товари в наявності:
+    if (trim.name == "" || trim.surname == "") {
+      alert("Будь ласка, заповніть усі поля.")
+      return
+    }
+
+    let text = `${surname} ${name} бажає замовити:\n`
+
+    if (store) {
+      if (store.cart.stock.val.length > 0) {
+        text += `Товари в наявності:
 ${store.cart.stock.val.map(item => {
-            const product = products.find(product => item.val == product.id)
-            const line = product ? `${product.title.ua} кіл-ть: ${item.count}` : ""
-            console.log(line)
-            return line
-          }).join("\n")}
+          const product = products.find(product => item.val == product.id)
+          const line = product ? `${product.title.ua} кіл-ть: ${item.count}` : ""
+          console.log(line)
+          return line
+        }).join("\n")}
 Всьго від ${price()} грн`
-        }
+      }
 
-        if (store.cart.order.val.length > 0) {
-          text += `\nТовари на замовлення:          
+      if (store.cart.order.val.length > 0) {
+        text += `\nТовари на замовлення:          
 ${store.cart.order.val.map(item =>
-            `--------
+          `--------
 ${item.val.name} 
 Кіл-ть: ${item.count}
 Для авто:
@@ -67,14 +76,13 @@ VIN: ${item.val.car.vin}
 Модель: ${item.val.car.model}
 Марка: ${item.val.car.brand}
 Рік: ${item.val.car.year}`
-          )
-            }`
-        }
-
-        text += `\n---------\nТелефон: ${phone}`
-
-        tgSendMessage(text, tgConfig)
+        )
+          }`
       }
+
+      text += `\n---------\nТелефон: ${phone}`
+
+      tgSendMessage(text, tgConfig)
     }
   }
 

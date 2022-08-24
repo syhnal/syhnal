@@ -1,5 +1,5 @@
 import { Car, CartItem, OrderProduct, Product } from "logic";
-import { createContext, Dispatch, FC, SetStateAction, useContext, useState } from "react";
+import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react";
 import { StateProp } from "./types";
 
 interface IStoreContext {
@@ -27,6 +27,25 @@ const StoreProvider: FC = ({ children }) => {
 
   const [start, setStart] = useState<string>("")
   const [brand, setBrand] = useState<string>("")
+
+  useEffect(() => {
+    const storageStr = localStorage.getItem("syhnal")
+    if (storageStr) {
+      const storageJson = JSON.parse(storageStr)
+      console.log(storageJson)
+      setStockCart(storageJson.cart.stock)
+      setOrderCart(storageJson.cart.order)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("syhnal", JSON.stringify({
+      cart: {
+        stock: stockCart,
+        order: orderCart
+      }
+    }))
+  }, [stockCart, orderCart])
 
 
   return (

@@ -110,7 +110,7 @@ VIN: ${item.val.car.vin}
                   <ul className="list-group list-group-flush">
                     {store?.cart.order.val.map(product =>
                       product ?
-                        <OrderItem product={product} />
+                        <OrderItem product={product} key={`${product.val.name}-${product.val.car.vin}`} />
                         : null
                     )}
                   </ul>

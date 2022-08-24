@@ -10,6 +10,7 @@ import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, u
 // local
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
 import { GetStaticProps, urlFor, getClient } from '../utils'
+import Image from 'next/image'
 
 
 interface IHomeProps {
@@ -29,8 +30,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
       <div className='container-xl'>
         <Banner />
 
-        <div className='mt-4'>
-
+        <div className='mt-5'>
           <div className='row row-cols-1 row-cols-md-2 g-5'>
             <div className='pe-md-5'>
               <h2 className='mb-3'>В наявності</h2>
@@ -45,14 +45,14 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
         </div>
 
         <div className='mt-5'>
-          <h2>Категорії</h2>
-          <div className='row row-cols-2 row-cols-md-4'>
+          <h2 className='text-center mb-4'>Категорії</h2>
+          <div className='row row-cols-2 row-cols-md-3 g-3 g-sm-4 g-md-5'>
             {categories.map(category =>
               <Link href={`/catalog/${category.slug}`} key={category.id}>
                 <a className='col'>
-                  <div className='card border-0'>
+                  <div >
                     {category.img ?
-                      <img src={urlFor(category.img).url()} className="card-img-top" alt="" />
+                      <Image src={urlFor(category.img).url()} className="card-img-top" width={900} height={600} />
                       : null}
                     <h5 className='card-title text-center'>{category.title.ua}</h5>
                   </div>

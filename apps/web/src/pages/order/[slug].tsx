@@ -30,8 +30,17 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
       phone: phone.trim()
     }
 
-    if (trim.name != "" && trim.surname != "") {
-      const text = `
+    if (phone.length < 13) {
+      alert("Будь ласка, перевірте номер телефону. Кількість цифр не є правильною.")
+      return
+    }
+
+    if (trim.name == "" || trim.surname == "") {
+      alert("Будь ласка, заповніть усі поля.")
+      return
+    }
+
+    const text = `
 ${surname} ${name} бажає замовити:
 ${product.title.ua}
 кількість: ${count} ${count > 1 ? `\nкожен від ${product.price.from} до ${product.price.to} грн` : ""}
@@ -39,10 +48,7 @@ ${product.title.ua}
 Телефон: ${phone}
 `
 
-      tgSendMessage(text, tgConfig)
-    } else {
-      alert("Усі поля моють бути заповненими")
-    }
+    tgSendMessage(text, tgConfig)
   }
 
   return (
@@ -52,24 +58,13 @@ ${product.title.ua}
       <div className="container-xl" style={{ minHeight: "68vh" }}>
         <h2>Замовити в один клік</h2>
         <ListItem header={product.title.ua}>
-          <div className="row align-items-center">
-
-            <div className="col-3">
+          <div className="row">
+            <div className="col d-flex justify-content-end">
               <Counter count={count} setCount={setCount} />
-              <div className="d-flex justify-content-center  align-items-center">
-                <i className={`bi bi-dash-lg fs-4 px-2 ${count == 1 ? "text-muted" : null}`}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => { if (count > 1) setCount(count - 1) }} />
-                <div className="user-select-none" style={{ fontWeight: 500 }}>
-                  {count}
-                </div>
-                <i className="bi bi-plus-lg fs-4 px-2" style={{ cursor: "pointer" }}
-                  onClick={() => setCount(count + 1)} />
-              </div>
             </div>
 
-            <div className="col-3 d-flex justify-content-end align-items-center">
-              <div style={{ fontWeight: 500 }}>
+            <div className="col d-flex justify-content-end align-items-center">
+              <div className="fs-5 fw-semibold">
                 від {product.price.from * count} грн
               </div>
             </div>

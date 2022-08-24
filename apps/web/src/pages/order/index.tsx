@@ -9,6 +9,7 @@ import { toCategoryList, Category, tgSendMessage } from "logic"
 // local
 import { Person, Title } from "../../components"
 import { getClient, GetStaticProps, tgConfig, useStore } from "../../utils"
+import { Counter, ListItem } from "ui"
 
 const OrderCustomPage = () => {
   const store = useStore()
@@ -24,11 +25,20 @@ const OrderCustomPage = () => {
   const order = () => {
     const trim = {
       name: name.trim(),
-      surname: surname.trim(),
-      phone: phone.trim()
+      surname: surname.trim()
     }
 
-    if (trim.name != "" && trim.surname != "" && store) {
+    if (phone.length < 13) {
+      alert("Будь ласка, перевірте номер телефону. Кількість цифр не є правильною.")
+      return
+    }
+
+    if (trim.name == "" || trim.surname == "") {
+      alert("Будь ласка, заповніть усі поля.")
+      return
+    }
+
+    if (store) {
       const text = `
 ${surname} ${name} бажає замовити:
 ${product}
@@ -40,10 +50,7 @@ VIN: ${store.car.val.vin}
 Рік: ${store.car.val.year}
 Телефон: ${phone}
 `
-
       tgSendMessage(text, tgConfig)
-    } else {
-      alert("Усі поля моють бути заповненими")
     }
   }
 
@@ -52,24 +59,14 @@ VIN: ${store.car.val.vin}
       <Title val="Замовити в один клік" />
       <div className="container-xl" style={{ minHeight: "65vh" }}>
         <h2>Замовити в один клік</h2>
-        <div className="row align-items-center mt-3">
-          <div className="col d-flex align-items-center">
-            <h6 className="m-0">{product}</h6>
-          </div>
 
-          <div className="col-3">
-            <div className="d-flex justify-content-end align-items-center">
-              <i className={`bi bi-dash-lg fs-4 px-2 ${count == 1 ? "text-muted" : null}`}
-                style={{ cursor: "pointer" }}
-                onClick={() => { if (count > 1) setCount(count - 1) }} />
-              <span className="user-select-none" style={{ fontWeight: 500 }}>
-                {count}
-              </span>
-              <i className="bi bi-plus-lg fs-4 px-2" style={{ cursor: "pointer" }}
-                onClick={() => setCount(count + 1)} />
+        {product
+          ? <ListItem header={product.toString()}>
+            <div className="d-flex justify-content-end">
+              <Counter count={count} setCount={setCount} />
             </div>
-          </div>
-        </div>
+          </ListItem>
+          : null}
 
         <div className="mt-4">
           <Person name={{ val: name, set: setName }}

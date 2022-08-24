@@ -9,13 +9,10 @@ interface PersonProps {
 
 const Person = ({ name, surname, phone }: PersonProps) => {
   const checkPhoneInput = (val: string): boolean => {
-    if (val.length > 13) return false
+    if (val.length > 13 || val.length < 4) return false
 
-    if (val.length > 0) {
-      const last = val.at(val.length - 1)
-      return last && "+1234567890".includes(last) ? true : false
-    }
-    return true
+    const last = val.at(val.length - 1)
+    return last && "1234567890".includes(last) ? true : false
   }
 
   return (

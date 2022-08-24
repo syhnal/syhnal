@@ -13,7 +13,9 @@ const SearchBrand = ({ brands }: SearchBrandProps) => {
   }
 
   return (
-    <select className="form-select form-select-lg shadow-none" onChange={select}>
+    <select className="form-select form-select-lg shadow-none"
+      onChange={select} defaultValue={store?.search.brand.val}
+    >
       <option value="">Усі марки авто</option>
       {brands.map(brand =>
         <option key={brand.id} value={brand.title}>{brand.title}</option>

@@ -20,13 +20,22 @@ const CustomBrandList = ({ items }: CustomBrandListProps) => {
           <Link href="/custom" >
             <a className="col">
               <div className="border-bottom d-flex justify-content-between align-items-center">
-                <Image src={urlFor(brand.img).url()} width='50px' height='50px' quality={100} />
+                <Image src={urlFor(brand.img).url()} width={50} height={50} quality={100} />
                 {brand.title}
               </div>
             </a>
           </Link>
         </div>
       )}
+      <div>
+        <Link href="/custom">
+          <a className="col">
+            <div className="border-bottom d-flex justify-content-center align-items-center" style={{ height: "51px" }}>
+              Всі, що є в наявності
+            </div>
+          </a>
+        </Link>
+      </div>
     </div>
   )
 

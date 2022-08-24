@@ -18,8 +18,8 @@ const StockBrandList = ({ items }: BrandsProps) => {
   return (
     <div className="row row-cols-2 row-cols-sm-3 row-cols-md-2 row-cols-lg-3 gy-3 gx-5">
       {items.map(brand =>
-        <div onClick={() => setBrand(brand.title)}>
-          <Link href="/catalog" key={brand.id}>
+        <div onClick={() => setBrand(brand.title)} key={brand.id}>
+          <Link href="/catalog">
             <a className="col">
               <div className="border-bottom d-flex justify-content-between align-items-center">
                 <Image src={urlFor(brand.img).url()} width='50px' height='50px' quality={100} />

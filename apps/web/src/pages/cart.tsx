@@ -89,7 +89,7 @@ VIN: ${item.val.car.vin}
               <h2>Кошик</h2>
 
               {store.cart.stock.val.length > 0 ?
-                <div>
+                <div className="mt-3">
                   <h4>Запчастини в наявності</h4>
                   <ul className="list-group list-group-flush">
                     {store?.cart.stock.val.map(item => {
@@ -105,15 +105,13 @@ VIN: ${item.val.car.vin}
               }
 
               {store.cart.order.val.length > 0 ?
-                <div>
+                <div className="mt-3">
                   <h4>Запчастини під замовлення</h4>
                   <ul className="list-group list-group-flush">
                     {store?.cart.order.val.map(product =>
-                      product ? (
-                        <li key={product.val.name} className="list-group-item px-0">
-                          <OrderItem product={product} />
-                        </li>
-                      ) : null
+                      product ?
+                        <OrderItem product={product} />
+                        : null
                     )}
                   </ul>
                 </div>

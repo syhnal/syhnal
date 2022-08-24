@@ -9,7 +9,7 @@ import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
 
 // local
 import { Title } from "../components";
-import { GetStaticProps, getClient, useStoreContext } from '../utils'
+import { GetStaticProps, getClient, useStore } from '../utils'
 import Link from "next/link";
 
 
@@ -20,7 +20,7 @@ interface CustomPageProps {
 
 const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
   const [name, setName] = useState("")
-  const store = useStoreContext()
+  const store = useStore()
 
   const setBrand = (value: string) =>
     store?.car.set({ ...store.car.val, brand: value })

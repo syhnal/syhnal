@@ -8,7 +8,7 @@ import { Article } from 'ui'
 import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
 
 // local
-import { Banner, StockBrandList, Title, ProductList, Viewed, CustomBrandList } from '../components'
+import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
 import { GetStaticProps, urlFor, getClient } from '../utils'
 
 
@@ -29,23 +29,22 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
       <div className='container-xl'>
         <Banner />
 
-        <div className='my-5'>
-          <h2 className='mb-3'>Новинки</h2>
-          <ProductList items={novelty} />
+        <div className='mt-4'>
+
+          <div className='row row-cols-1 row-cols-md-2 g-5'>
+            <div className='pe-md-5'>
+              <h2 className='mb-3'>В наявності</h2>
+              <StockBrandList items={brands.stock} />
+            </div>
+            <div className='ps-md-5'>
+              <h2 className='mb-3'>Під замовлення</h2>
+              <CustomBrandList items={brands.order} />
+            </div>
+          </div>
+
         </div>
 
-        <div className='my-5 row row-cols-1 row-cols-md-2 g-5'>
-          <div className='col pe-md-5'>
-            <h2 className='mb-3'>В наявності</h2>
-            <StockBrandList items={brands.stock} />
-          </div>
-          <div className='col ps-md-5'>
-            <h2 className='mb-3'>Під замовлення</h2>
-            <CustomBrandList items={brands.order} />
-          </div>
-        </div>
-
-        <div className='py-5'>
+        <div className='mt-5'>
           <h2>Категорії</h2>
           <div className='row row-cols-2 row-cols-md-4'>
             {categories.map(category =>
@@ -63,12 +62,12 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
           </div>
         </div>
 
-        <div>
-          <h2 className='mb-3'>Ви переглядали</h2>
-          <Viewed />
+        <div className='mt-5'>
+          <h2 className='mb-3'>Новинки</h2>
+          <ProductList items={novelty} />
         </div>
 
-        <Article className='my-5'
+        <Article className='mt-5'
           header='Як правильно купити запчастини?'
           paragraphs={[
             'Якщо вам необхідно купити запчастини моторної групи, ходової або ж до коробки передач, то тут радимо не гнатися за максимальною економією. Це пов`язано з тим, що у неоригінальних запчастин ресурс експлуатації менший, ніж в оригінальної запчастини. Якщо ж Вам необхідно замінити ручку від дверей, або фару, то в цьому випадку допустимо вдатися до економії',

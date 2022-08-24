@@ -9,6 +9,7 @@ import { Product, tgSendMessage, toCategoryList, Category, toProduct } from "log
 // local
 import { tgConfig, getClient, urlFor, GetStaticProps } from '../../utils'
 import { Person, Title } from "../../components"
+import { Counter, ListItem } from "ui"
 
 
 interface OrderPageProps {
@@ -50,30 +51,31 @@ ${product.title.ua}
 
       <div className="container-xl" style={{ minHeight: "68vh" }}>
         <h2>Замовити в один клік</h2>
-        <div className="row align-items-center">
-          <div className="col-6 d-flex align-items-center">
-            <h6 className="m-0 ms-4">{product.title.ua}</h6>
-          </div>
+        <ListItem header={product.title.ua}>
+          <div className="row align-items-center">
 
-          <div className="col-3">
-            <div className="d-flex justify-content-center  align-items-center">
-              <i className={`bi bi-dash-lg fs-4 px-2 ${count == 1 ? "text-muted" : null}`}
-                style={{ cursor: "pointer" }}
-                onClick={() => { if (count > 1) setCount(count - 1) }} />
-              <div className="user-select-none" style={{ fontWeight: 500 }}>
-                {count}
+            <div className="col-3">
+              <Counter count={count} setCount={setCount} />
+              <div className="d-flex justify-content-center  align-items-center">
+                <i className={`bi bi-dash-lg fs-4 px-2 ${count == 1 ? "text-muted" : null}`}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { if (count > 1) setCount(count - 1) }} />
+                <div className="user-select-none" style={{ fontWeight: 500 }}>
+                  {count}
+                </div>
+                <i className="bi bi-plus-lg fs-4 px-2" style={{ cursor: "pointer" }}
+                  onClick={() => setCount(count + 1)} />
               </div>
-              <i className="bi bi-plus-lg fs-4 px-2" style={{ cursor: "pointer" }}
-                onClick={() => setCount(count + 1)} />
             </div>
-          </div>
 
-          <div className="col-3 d-flex justify-content-end align-items-center">
-            <div style={{ fontWeight: 500 }}>
-              від {product.price.from * count} грн
+            <div className="col-3 d-flex justify-content-end align-items-center">
+              <div style={{ fontWeight: 500 }}>
+                від {product.price.from * count} грн
+              </div>
             </div>
+
           </div>
-        </div>
+        </ListItem>
 
         <div className="mt-5">
           <Person name={{ val: name, set: setName }}

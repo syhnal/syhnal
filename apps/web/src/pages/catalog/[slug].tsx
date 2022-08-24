@@ -3,33 +3,59 @@ import { GetStaticPaths, NextPage } from "next"
 import groq from "groq"
 
 // shared
-import { Product, Category, toCategoryList, toProductList } from "logic"
+import { Product, Brand, Category, toCategoryList, toProductList, toBrandList, uniqueBrand } from "logic"
 
 // local
-import { ProductList, Title } from "../../components"
-import { getClient, GetStaticProps } from "../../utils"
+import { NoInStock, ProductList, SearchBrand, Title } from "../../components"
+import { getClient, GetStaticProps, useStore } from "../../utils"
+import Link from "next/link"
 
 
 interface CategoryCatalogProps {
   products: Product[]
+  brands: Brand[]
   category: {
     ua: string
     ru: string
   }
 }
 
-const CategoryCatalog: NextPage<CategoryCatalogProps> = ({ products, category }) => {
+const CategoryCatalog: NextPage<CategoryCatalogProps> = ({ products, category, brands }) => {
+  const store = useStore()
+  const start = store ? store.search.start.val.toLowerCase() : ""
+
+  const productList = products
+    .filter(product =>
+      product.title.ua.toLowerCase().startsWith(start) && store &&
+      product.brand.title.startsWith(store.search.brand.val)
+    )
+
   return (
     <>
       <Title val="Каталог" />
 
       <div className="container-xl">
-        <ol className="breadcrumb text-muted" style={{ fontSize: 13 }}>
-          <li className="breadcrumb-item">Каталог</li>
-          <li className="breadcrumb-item">{category.ua}</li>
-        </ol>
-        <h2>{category.ua}</h2>
-        <ProductList items={products} />
+        <div className="d-flex justify-content-between align-items-end">
+          <div>
+            <ol className="breadcrumb text-muted" style={{ fontSize: 13 }}>
+              <li className="breadcrumb-item">
+                <Link href="/catalog">Каталог</Link>
+              </li>
+              <li className="breadcrumb-item">{category.ua}</li>
+            </ol>
+            <h2 className="mb-0">{category.ua}</h2>
+          </div>
+          <div><SearchBrand brands={brands} /></div>
+        </div>
+
+        <div className="mt-4">
+          {productList.length > 0
+            ? <ProductList items={productList} />
+            : <div style={{ height: "40vh" }} className="d-flex flex-column justify-content-center">
+              <NoInStock />
+            </div>
+          }
+        </div>
       </div>
     </>
   )
@@ -67,10 +93,16 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
     .fetch(groq`*[_type == 'category']`)
     .then<Category[]>(toCategoryList)
 
+  const brands = await client
+    .fetch(groq`*[_type == 'product']{...brand->}`)
+    .then<Brand[]>(toBrandList)
+    .then(brands => brands.filter(uniqueBrand))
+
   return {
     props: {
       products,
       category,
+      brands,
       categories
     },
     revalidate: 10

@@ -1,7 +1,7 @@
 import { Brand } from "logic"
 import Image from "next/image"
 import Link from "next/link"
-import { useStoreContext } from "../../../utils"
+import { useStore } from "../../../utils"
 import { urlFor } from "../../../utils/cms/sanity"
 
 interface CustomBrandListProps {
@@ -9,7 +9,7 @@ interface CustomBrandListProps {
 }
 
 const CustomBrandList = ({ items }: CustomBrandListProps) => {
-  const store = useStoreContext()
+  const store = useStore()
 
   const setBrand = (brand: string) => store?.car.set({ ...store.car.val, brand })
 

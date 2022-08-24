@@ -9,9 +9,8 @@ const Banner = () => {
         objectPosition='50% 80%'
         alt='Banner'
         src='/banner.png'
-        width={1260} height={500} layout='responsive' />
-
-      {/* bottom-0 start-0 m-5 */}
+        width={1260} height={500} layout='responsive'
+      />
 
       <div className='position-absolute' style={{ bottom: '7%', left: '4%' }}>
         <h1 className='text-white'

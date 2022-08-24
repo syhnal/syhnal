@@ -6,8 +6,8 @@ import { NextPage } from "next";
 import { Product, Category, toCategoryList, toProductList, Brand, toBrandList, uniqueBrand } from "logic";
 
 // local
-import { getClient, GetStaticProps, useStoreContext } from '../../utils'
-import { NoInStock, ProductList, Title } from "../../components";
+import { getClient, GetStaticProps, useStore } from '../../utils'
+import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
 
 
 interface CatalogProps {
@@ -16,12 +16,8 @@ interface CatalogProps {
 }
 
 const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
-  const store = useStoreContext()
+  const store = useStore()
   const start = store ? store.search.start.val.toLowerCase() : ""
-
-  const selectBrand = (value: string) => {
-    if (store) store.search.brand.set(value)
-  }
 
   const productList = products
     .filter(product =>
@@ -34,26 +30,19 @@ const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
       <Title val="Каталог" />
 
       <div className="container-xl">
-        <div className="d-flex justify-content-between my-4 align-items-center">
-          <h2 className="">Каталог</h2>
-          <div >
-            <select className="form-select form-select-lg shadow-none"
-              onChange={(e: any) => selectBrand(e.target.value)}
-              defaultValue={store?.search.brand.val}
-            >
-              <option value="">Усі марки авто</option>
-              {brands.map(brand =>
-                <option key={brand.id} value={brand.title}>{brand.title}</option>
-              )}
-            </select>
-          </div>
+        <div className="d-flex justify-content-between mt-4 align-items-center">
+          <h2 className="mb-0">Каталог</h2>
+          <div><SearchBrand brands={brands} /></div>
         </div>
-        {productList.length > 0
-          ? <ProductList items={productList} />
-          : <div style={{ height: "40vh" }} className="d-flex flex-column justify-content-center">
-            <NoInStock />
-          </div>
-        }
+
+        <div className="mt-4">
+          {productList.length > 0
+            ? <ProductList items={productList} />
+            : <div style={{ height: "40vh" }} className="d-flex flex-column justify-content-center">
+              <NoInStock />
+            </div>
+          }
+        </div>
       </div>
     </div>
   )

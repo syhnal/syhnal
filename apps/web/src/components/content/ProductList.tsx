@@ -3,14 +3,14 @@ import Link from "next/link"
 import { MouseEventHandler } from "react"
 import { ListItem } from "ui"
 import { urlFor } from "../../utils/cms/sanity"
-import { useStoreContext } from "../../utils/store"
+import { useStore } from "../../utils/store"
 
 interface IProductListProps {
   items: Product[]
 }
 
 const ProductList = ({ items }: IProductListProps) => {
-  const store = useStoreContext()
+  const store = useStore()
 
   const toCart = (item: Product) => {
     if (store && !store.cart.stock.val.some(some => some.val == item.id)) {

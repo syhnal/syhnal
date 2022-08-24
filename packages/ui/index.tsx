@@ -7,3 +7,4 @@ export * from "./common/FloatingSelect"
 // content
 export * from './content/Article'
 export * from './content/ListItem'
+export * from "./content/Counter"

@@ -1,14 +1,14 @@
 import { CartItem, OrderProduct, Product } from "logic"
 import Image from "next/image"
 import { urlFor } from "../../../utils/cms/sanity"
-import { useStoreContext } from "../../../utils/store"
+import { useStore } from "../../../utils/store"
 
 interface OrderItemProps {
   product: CartItem<OrderProduct>
 }
 
 const OrderItem = ({ product }: OrderItemProps) => {
-  const store = useStoreContext()
+  const store = useStore()
 
   const increment = (name: string) => {
     if (store) store.cart.order.set(store.cart.order.val.map(item =>

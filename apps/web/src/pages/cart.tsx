@@ -7,7 +7,7 @@ import groq from "groq"
 import { toProductList, Product, toCategoryList, Category, tgSendMessage } from "logic"
 
 // local
-import { useStoreContext, getClient, GetStaticProps, tgConfig } from '../utils'
+import { useStore, getClient, GetStaticProps, tgConfig } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
 
@@ -16,7 +16,7 @@ interface ICartProps {
 }
 
 const Cart: NextPage<ICartProps> = ({ products }) => {
-  const store = useStoreContext()
+  const store = useStore()
 
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")

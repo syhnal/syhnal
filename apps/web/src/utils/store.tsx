@@ -67,6 +67,6 @@ const StoreProvider: FC = ({ children }) => {
   )
 }
 
-const useStoreContext = () => useContext(StoreContext)
+const useStore = () => useContext(StoreContext)
 
-export { StoreProvider, useStoreContext }
+export { StoreProvider, useStore }

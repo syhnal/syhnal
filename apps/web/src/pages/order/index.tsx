@@ -8,10 +8,10 @@ import { toCategoryList, Category, tgSendMessage } from "logic"
 
 // local
 import { Person, Title } from "../../components"
-import { getClient, GetStaticProps, tgConfig, useStoreContext } from "../../utils"
+import { getClient, GetStaticProps, tgConfig, useStore } from "../../utils"
 
 const OrderCustomPage = () => {
-  const store = useStoreContext()
+  const store = useStore()
   const router = useRouter()
 
   const [name, setName] = useState("")

@@ -21,7 +21,7 @@ export * from "./content/home/BrandList"
 export * from "./content/home/CustomBrandList"
 
 export * from "./content/ProductList"
-export * from "./content/home/Viewed"
 
 // catalog
 export * from "./content/catalog/NoInStock"
+export * from "./content/catalog/SearchBrand"

@@ -1,7 +1,7 @@
 import { Brand } from "logic"
 import Image from "next/image"
 import Link from "next/link"
-import { useStoreContext } from "../../../utils"
+import { useStore } from "../../../utils"
 import { urlFor } from "../../../utils/cms/sanity"
 
 interface BrandsProps {
@@ -9,7 +9,7 @@ interface BrandsProps {
 }
 
 const StockBrandList = ({ items }: BrandsProps) => {
-  const store = useStoreContext()
+  const store = useStore()
 
   const setBrand = (value: string) => {
     store?.search.brand.set(value)

@@ -2,7 +2,7 @@ import { CartItem, Product } from "logic"
 import Image from "next/image"
 import { ListItem } from "ui"
 import { urlFor } from "../../../utils/cms/sanity"
-import { useStoreContext } from "../../../utils/store"
+import { useStore } from "../../../utils/store"
 
 interface StockItemProps {
   count: number
@@ -10,7 +10,7 @@ interface StockItemProps {
 }
 
 const StockItem = ({ count, product }: StockItemProps) => {
-  const store = useStoreContext()
+  const store = useStore()
 
   const increment = (id: string) => {
     if (store) store.cart.stock.set(store.cart.stock.val.map(item =>

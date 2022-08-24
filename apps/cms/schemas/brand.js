@@ -1,6 +1,7 @@
 import isSlugUnique from "../utils/unique-slug"
 
 export default {
+  title: 'Марка авто',
   name: 'brand',
   type: 'document',
   fields: [

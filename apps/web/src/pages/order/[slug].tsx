@@ -1,7 +1,6 @@
 // installed
 import groq from "groq"
 import { GetStaticPaths, NextPage } from "next"
-import Image from "next/image"
 import { useState } from "react"
 
 // shared
@@ -53,9 +52,6 @@ ${product.title.ua}
         <h2>Замовити в один клік</h2>
         <div className="row align-items-center">
           <div className="col-6 d-flex align-items-center">
-            {product.img ?
-              <Image src={urlFor(product.img).url()} alt="" width={80} height={80} />
-              : null}
             <h6 className="m-0 ms-4">{product.title.ua}</h6>
           </div>
 
@@ -64,18 +60,18 @@ ${product.title.ua}
               <i className={`bi bi-dash-lg fs-4 px-2 ${count == 1 ? "text-muted" : null}`}
                 style={{ cursor: "pointer" }}
                 onClick={() => { if (count > 1) setCount(count - 1) }} />
-              <span className="user-select-none" style={{ fontWeight: 500 }}>
+              <div className="user-select-none" style={{ fontWeight: 500 }}>
                 {count}
-              </span>
+              </div>
               <i className="bi bi-plus-lg fs-4 px-2" style={{ cursor: "pointer" }}
                 onClick={() => setCount(count + 1)} />
             </div>
           </div>
 
           <div className="col-3 d-flex justify-content-end align-items-center">
-            <span style={{ fontWeight: 500 }}>
+            <div style={{ fontWeight: 500 }}>
               від {product.price.from * count} грн
-            </span>
+            </div>
           </div>
         </div>
 

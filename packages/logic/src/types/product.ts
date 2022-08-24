@@ -11,7 +11,6 @@ export interface Product {
     to: number
   }
   slug: string
-  img?: any
   brand: Brand
 }
 
@@ -65,8 +64,6 @@ const toProduct = (data: any): Product => {
     slug: data.slug.current,
     brand: toBrand(data.brand)
   }
-
-  if (data.hasOwnProperty("img")) product.img = data.img
 
   return product
 }

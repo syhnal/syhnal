@@ -96,9 +96,7 @@ VIN: ${item.val.car.vin}
                       const product = products.find(data => data.id == item.val)
 
                       return product ?
-                        <li key={item.val} className="list-group-item px-0">
-                          <StockItem count={item.count} product={product} />
-                        </li>
+                        <StockItem count={item.count} product={product} key={item.val} />
                         : null
                     })}
                   </ul>

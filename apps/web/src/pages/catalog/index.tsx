@@ -7,7 +7,7 @@ import { Product, Category, toCategoryList, toProductList, Brand, toBrandList, u
 
 // local
 import { getClient, GetStaticProps, useStoreContext } from '../../utils'
-import { ProductList, Title } from "../../components";
+import { NoInStock, ProductList, Title } from "../../components";
 
 
 interface CatalogProps {
@@ -23,12 +23,17 @@ const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
     if (store) store.search.brand.set(value)
   }
 
+  const productList = products
+    .filter(product =>
+      product.title.ua.toLowerCase().startsWith(start) && store &&
+      product.brand.title.startsWith(store.search.brand.val)
+    )
 
   return (
     <div>
       <Title val="Каталог" />
 
-      <div className="container-xl" style={{ minHeight: "64vh" }}>
+      <div className="container-xl">
         <div className="d-flex justify-content-between my-4 align-items-center">
           <h2 className="">Каталог</h2>
           <div >
@@ -43,11 +48,12 @@ const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
             </select>
           </div>
         </div>
-        <ProductList items={products.filter(product =>
-          product.title.ua.toLowerCase().startsWith(start) && store &&
-          product.brand.title.startsWith(store.search.brand.val)
-        )}
-        />
+        {productList.length > 0
+          ? <ProductList items={productList} />
+          : <div style={{ height: "40vh" }} className="d-flex flex-column justify-content-center">
+            <NoInStock />
+          </div>
+        }
       </div>
     </div>
   )

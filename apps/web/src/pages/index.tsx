@@ -18,13 +18,10 @@ interface IHomeProps {
     stock: Brand[]
     order: Brand[]
   }
-  popular: {
-    categories: Category[]
-    products: Product[]
-  }
+  categories: Category[]
 }
 
-const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
+const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
   return (
     <div>
       <Title val='Сигнал' />
@@ -49,14 +46,9 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, popular }) => {
         </div>
 
         <div className='py-5'>
-          <h2 className='mb-3'>Популярні товари</h2>
-          <ProductList items={popular.products} />
-        </div>
-
-        <div className='py-5'>
-          <h2>Популярні категорії</h2>
+          <h2>Категорії</h2>
           <div className='row row-cols-2 row-cols-md-4'>
-            {popular.categories.map(category =>
+            {categories.map(category =>
               <Link href={`/catalog/${category.slug}`} key={category.id}>
                 <a className='col'>
                   <div className='card border-0'>
@@ -107,14 +99,6 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     .fetch(groq`*[_type == 'brand' && !(_id in ["${stockBrands.map(brand => brand.id).join('", "')}"])]`)
     .then<Brand[]>(toBrandList)
 
-  const popularCategories = await client
-    .fetch(groq`*[_type == 'category'] | order(orders asc)[0...10]`)
-    .then<Category[]>(toCategoryList)
-
-  const popularProducts = await client
-    .fetch(groq`*[_type == 'product'] | order(orders asc)[0...10]{..., brand->}`)
-    .then<Product[]>(toProductList)
-
   const categories = await client.
     fetch(groq`*[_type == 'category']`)
     .then<Category[]>(toCategoryList)
@@ -125,10 +109,6 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
       brands: {
         stock: stockBrands,
         order: orderBrands
-      },
-      popular: {
-        categories: popularCategories,
-        products: popularProducts
       },
       categories
     },

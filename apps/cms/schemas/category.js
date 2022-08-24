@@ -1,6 +1,7 @@
 import isSlugUnique from "../utils/unique-slug"
 
 export default {
+  title: 'Категорія',
   name: 'category',
   type: 'document',
   fields: [
@@ -35,12 +36,6 @@ export default {
         isUnique: isSlugUnique,
       },
       validation: slug => slug.required()
-    },
-    {
-      title: 'Кіл-ть замовлень',
-      name: 'orders',
-      type: 'number',
-      initialValue: 0
     },
   ]
 }

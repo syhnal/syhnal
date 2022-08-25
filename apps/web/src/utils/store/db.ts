@@ -12,7 +12,6 @@ const loadDb = (): Db | undefined => {
   const storageStr = localStorage.getItem("syhnal")
   if (storageStr) {
     const storageJson = JSON.parse(storageStr)
-    console.log(storageJson)
     return {
       cart: {
         stock: storageJson.cart.stock,

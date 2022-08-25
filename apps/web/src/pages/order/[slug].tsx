@@ -21,25 +21,11 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
 
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
-  const [phone, setPhone] = useState("+380")
+  const [phone, setPhone] = useState("")
+
+  const isValid = name.trim() != "" && surname.trim() != "" && phone.length == 9
 
   const order = () => {
-    const trim = {
-      name: name.trim(),
-      surname: surname.trim(),
-      phone: phone.trim()
-    }
-
-    if (phone.length < 13) {
-      alert("Будь ласка, перевірте номер телефону. Кількість цифр не є правильною.")
-      return
-    }
-
-    if (trim.name == "" || trim.surname == "") {
-      alert("Будь ласка, заповніть усі поля.")
-      return
-    }
-
     const text = `
 ${surname} ${name} бажає замовити:
 ${product.title.ua}
@@ -79,7 +65,8 @@ ${product.title.ua}
         </div>
 
         <div className="d-flex justify-content-center mt-3">
-          <button className="btn btn-primary btn-lg" onClick={order}>Замовити</button>
+          <button className='btn btn-lg btn-dark-blue'
+            onClick={order} disabled={!isValid}>Замовити</button>
         </div>
       </div>
     </div>

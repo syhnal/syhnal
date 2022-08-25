@@ -32,9 +32,13 @@ const NavBar = ({ categories }: NavBarProps) => {
           <div className="d-flex align-items-center">
             <Logo />
             {store ?
-              <IconInput icon="search" placeholder="Пошук запчастин в наявності" val={store.search.start.val} setVal={store.search.start.set} enterClick={search} />
+              <IconInput icon="search" placeholder="Пошук в магазині"
+                val={store.search.start.val} setVal={store.search.start.set}
+                enterClick={search} />
               : null}
-            <CartLink count={store ? store.cart.stock.val.length + store.cart.order.val.length : 0} />
+            <CartLink count={store ?
+              store.cart.stock.val.length + store.cart.order.val.length
+              : 0} />
           </div>
         </div>
       </div>

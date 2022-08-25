@@ -18,7 +18,7 @@ const Banner = () => {
           Автозапчастини<br />під замовлення
         </h1>
         <Link href='/custom'>
-          <a className='btn btn-light btn-lg mt-2'>Замовити</a>
+          <a className='btn btn-main btn-lg mt-2'>Замовити</a>
         </Link>
       </div>
 

@@ -17,27 +17,14 @@ const OrderCustomPage = () => {
 
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
-  const [phone, setPhone] = useState("+380")
+  const [phone, setPhone] = useState("")
 
   const [count, setCount] = useState(1)
   const { product } = router.query
 
+  const isValid = name.trim() != "" && surname.trim() != "" && phone.length == 9
+
   const order = () => {
-    const trim = {
-      name: name.trim(),
-      surname: surname.trim()
-    }
-
-    if (phone.length < 13) {
-      alert("Будь ласка, перевірте номер телефону. Кількість цифр не є правильною.")
-      return
-    }
-
-    if (trim.name == "" || trim.surname == "") {
-      alert("Будь ласка, заповніть усі поля.")
-      return
-    }
-
     if (store) {
       const text = `
 ${surname} ${name} бажає замовити:
@@ -75,7 +62,8 @@ VIN: ${store.car.val.vin}
         </div>
 
         <div className="d-flex justify-content-center mt-3">
-          <button className="btn btn-primary btn-lg" onClick={order}>Замовити</button>
+          <button className="btn btn-dark-blue btn-lg" disabled={!isValid}
+            onClick={order}>Замовити</button>
         </div>
       </div>
     </>

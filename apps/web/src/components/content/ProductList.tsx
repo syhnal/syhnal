@@ -18,14 +18,6 @@ const ProductList = ({ items }: IProductListProps) => {
     }
   }
 
-  // const toViewed = (item: Product) => {
-  //   if (store && !store.viewed.val.includes(item)) {
-  //     store.viewed.set(store.viewed.val.length < 5
-  //       ? [item, ...store.viewed.val]
-  //       : [item, ...store.viewed.val.slice(0, store.viewed.val.length - 1)])
-  //   }
-  // }
-
   return (
     <div className="list-group list-group-flush">
       {items.map(item => {
@@ -36,9 +28,9 @@ const ProductList = ({ items }: IProductListProps) => {
             <div className="d-flex justify-content-end gap-4 align-items-center">
               <div className="fs-5 fw-semibold me-3">Від {item.price.from} грн</div>
               <Link href={`/order/${item.slug}`}>
-                <button className="btn btn-sm btn-primary shadow-none">Замовити в 1 клік</button>
+                <button className="btn btn-sm btn-main shadow-none">Замовити в 1 клік</button>
               </Link>
-              <button className={`btn btn-sm btn-outline-${inCart ? "success" : "primary"} shadow-none`}
+              <button className={`btn btn-sm ${inCart ? "btn-green" : "btn-outline"} shadow-none`}
                 onClick={() => toCart(item)}>
                 {inCart ? "Додано" : "В кошик"}
               </button>

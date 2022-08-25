@@ -1,3 +1,4 @@
+import { handleClientScriptLoad } from 'next/script'
 import { FloatingInput } from "ui"
 import { StateProp } from "../../../utils/types"
 
@@ -9,10 +10,10 @@ interface PersonProps {
 
 const Person = ({ name, surname, phone }: PersonProps) => {
   const checkPhoneInput = (val: string): boolean => {
-    if (val.length > 13 || val.length < 4) return false
+    if (val.length > 9) return false
 
     const last = val.at(val.length - 1)
-    return last && "1234567890".includes(last) ? true : false
+    return last ? "1234567890".includes(last) ? true : false : true
   }
 
   return (
@@ -24,7 +25,7 @@ const Person = ({ name, surname, phone }: PersonProps) => {
         <FloatingInput label="Прізвище" val={surname.val} setVal={surname.set} />
       </div>
       <div className="col w-100">
-        <FloatingInput label="Номер телефону" val={phone.val} setVal={phone.set}
+        <FloatingInput front='+380' label="Номер телефону" val={phone.val} setVal={phone.set}
           check={checkPhoneInput} />
       </div>
     </div>

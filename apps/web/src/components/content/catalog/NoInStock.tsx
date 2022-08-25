@@ -7,7 +7,7 @@ const NoInStock = () => {
       <div className="d-flex justify-content-center gap-3 gap-md-5 align-items-center">
         <h2>Ви можете її замовити</h2>
         <Link href={`/custom`}>
-          <div className="btn btn-lg btn-primary shadow-none">Замовити</div>
+          <div className="btn btn-lg btn-dark-blue shadow-none">Замовити</div>
         </Link>
       </div>
     </div>

@@ -1,8 +1,13 @@
 // common
-export * from "./common/Button";
-export * from './common/IconInput'
-export * from "./common/FloatingInput"
-export * from "./common/FloatingSelect"
+
+///
+// export * from "";
+
+/// inputs
+export * from './common/inputs/IconInput'
+export * from "./common/inputs/FloatingInput"
+export * from "./common/inputs/FloatingSelect"
+
 
 // content
 export * from './content/Article'

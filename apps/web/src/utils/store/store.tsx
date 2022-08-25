@@ -28,17 +28,19 @@ const StoreProvider: FC = ({ children }) => {
   const [brand, setBrand] = useState<string>("")
 
   useEffect(() => {
-    const cart = loadDb()
-    if (cart) {
-      setStockCart(cart.stock)
-      setOrderCart(cart.order)
+    const db = loadDb()
+    if (db) {
+      setStockCart(db.cart.stock)
+      setOrderCart(db.cart.order)
     }
   }, [])
 
   useEffect(() => {
     updateDb({
-      stock: stockCart,
-      order: orderCart
+      cart: {
+        stock: stockCart,
+        order: orderCart
+      }
     })
   }, [stockCart, orderCart])
 

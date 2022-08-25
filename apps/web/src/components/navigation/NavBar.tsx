@@ -2,7 +2,7 @@ import { Category } from "logic"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { IconInput } from "ui"
-import { useStore } from "../../utils/store"
+import { useStore } from "../../utils/store/store"
 import { CartLink } from "./CartLink"
 import { Logo } from "./Logo"
 

@@ -83,6 +83,8 @@ VIN: ${item.val.car.vin}
       text += `\n---------\nТелефон: ${phone}`
 
       tgSendMessage(text, tgConfig)
+
+
     }
   }
 

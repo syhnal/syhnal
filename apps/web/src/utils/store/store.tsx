@@ -1,6 +1,7 @@
 import { Car, CartItem, OrderProduct, Product } from "logic";
 import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react";
-import { StateProp } from "./types";
+import { StateProp } from "../types";
+import { loadDb, updateDb } from "./db";
 
 interface IStoreContext {
   cart: {
@@ -12,7 +13,6 @@ interface IStoreContext {
     start: StateProp<string>
     brand: StateProp<string>
   }
-  viewed: StateProp<Product[]>
 }
 
 const StoreContext = createContext<IStoreContext | null>(null)
@@ -20,7 +20,6 @@ const StoreContext = createContext<IStoreContext | null>(null)
 const StoreProvider: FC = ({ children }) => {
   const [stockCart, setStockCart] = useState<CartItem<string>[]>([])
   const [orderCart, setOrderCart] = useState<CartItem<OrderProduct>[]>([])
-  const [viewed, setViewed] = useState<Product[]>([])
   const [car, setCar] = useState<Car>({
     brand: "", model: "", vin: "", year: 2022
   })
@@ -29,56 +28,32 @@ const StoreProvider: FC = ({ children }) => {
   const [brand, setBrand] = useState<string>("")
 
   useEffect(() => {
-    const storageStr = localStorage.getItem("syhnal")
-    if (storageStr) {
-      const storageJson = JSON.parse(storageStr)
-      console.log(storageJson)
-      setStockCart(storageJson.cart.stock)
-      setOrderCart(storageJson.cart.order)
+    const cart = loadDb()
+    if (cart) {
+      setStockCart(cart.stock)
+      setOrderCart(cart.order)
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem("syhnal", JSON.stringify({
-      cart: {
-        stock: stockCart,
-        order: orderCart
-      }
-    }))
+    updateDb({
+      stock: stockCart,
+      order: orderCart
+    })
   }, [stockCart, orderCart])
-
 
   return (
     <StoreContext.Provider
       value={{
         cart: {
-          stock: {
-            val: stockCart,
-            set: setStockCart
-          },
-          order: {
-            val: orderCart,
-            set: setOrderCart
-          }
+          stock: { val: stockCart, set: setStockCart },
+          order: { val: orderCart, set: setOrderCart }
         },
         search: {
-          start: {
-            val: start,
-            set: setStart
-          },
-          brand: {
-            val: brand,
-            set: setBrand
-          }
+          start: { val: start, set: setStart },
+          brand: { val: brand, set: setBrand }
         },
-        car: {
-          val: car,
-          set: setCar
-        },
-        viewed: {
-          val: viewed,
-          set: setViewed
-        }
+        car: { val: car, set: setCar },
       }}
     >
       {children}

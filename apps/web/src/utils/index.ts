@@ -7,7 +7,7 @@ export * from "./cms/sanity.server"
 export * from "./telegram/config"
 
 // store
-export * from "./store"
+export * from "./store/store"
 
 // types
 export * from "./types"

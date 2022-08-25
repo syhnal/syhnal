@@ -3,7 +3,7 @@ import Link from "next/link"
 import { MouseEventHandler } from "react"
 import { ListItem } from "ui"
 import { urlFor } from "../../utils/cms/sanity"
-import { useStore } from "../../utils/store"
+import { useStore } from "../../utils/store/store"
 
 interface IProductListProps {
   items: Product[]

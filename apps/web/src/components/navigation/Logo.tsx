@@ -4,7 +4,7 @@ const Logo = () => {
   return (
     <div>
       <Link href="/">
-        <a className="fs-3 me-3 me-md-5 text-dark"
+        <a className="fs-3 text-dark"
           style={{
             fontFamily: "Bender",
             backgroundColor: "black",

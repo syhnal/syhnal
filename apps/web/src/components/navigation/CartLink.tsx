@@ -8,7 +8,7 @@ interface CartLinkProps {
 const CartLink = ({ count }: CartLinkProps) => {
   return (
     <Link href="/cart">
-      <a className="ms-5 d-flex flex-column align-items-center">
+      <a className="d-flex flex-column align-items-center">
         <i className="bi bi-cart2 fs-4 position-relative">
           <div className="position-absolute translate-middle bg-light rounded-1 text-center"
             style={{

@@ -94,7 +94,6 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
     .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]{..., brand->}`)
     .then<Product>(data => toProduct(data))
 
-
   return {
     props: {
       product

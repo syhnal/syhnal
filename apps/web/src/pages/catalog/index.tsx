@@ -55,10 +55,9 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     groq`*[_type == 'product']{..., brand->}`
   ).then<Product[]>(toProductList)
 
-  const brands = await client
-    .fetch(groq`*[_type == 'product']{...brand->}`)
-    .then<Brand[]>(toBrandList)
-    .then(brands => brands.filter(uniqueBrand))
+  const brands: Brand[] = products
+    .map(product => product.brand)
+    .filter(uniqueBrand)
 
   return {
     props: {

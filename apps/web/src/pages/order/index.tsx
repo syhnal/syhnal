@@ -9,9 +9,10 @@ import { Counter, ListItem } from "ui"
 // local
 import { Person, Title } from "../../components"
 import { tgConfig, useStore } from "../../utils"
+import { NextPage } from 'next'
 
 
-const OrderCustomPage = () => {
+const OrderCustomPage: NextPage = () => {
   const store = useStore()
   const router = useRouter()
 
@@ -69,6 +70,5 @@ VIN: ${store.car.val.vin}
     </>
   )
 }
-
 
 export default OrderCustomPage

@@ -26,15 +26,19 @@ const NavBar = () => {
           </div>
 
           <div className="d-flex align-items-center">
-            <Logo />
+            <div className='me-3 me-md-5 '>
+              <Logo />
+            </div>
             {store ?
               <IconInput icon="search" placeholder="Пошук в магазині"
                 val={store.search.start.val} setVal={store.search.start.set}
                 enterClick={search} />
               : null}
-            <CartLink count={store ?
-              store.cart.stock.val.length + store.cart.order.val.length
-              : 0} />
+            <div className='ms-3 ms-md-5'>
+              <CartLink count={store ?
+                store.cart.stock.val.length + store.cart.order.val.length
+                : 0} />
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 // installed
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import groq from 'groq'
 
@@ -9,7 +9,7 @@ import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, u
 
 // local
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
-import { GetStaticProps, urlFor, getClient } from '../utils'
+import { urlFor, getClient } from '../utils'
 import Image from 'next/image'
 
 
@@ -99,8 +99,8 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     .fetch(groq`*[_type == 'brand' && !(_id in ["${stockBrands.map(brand => brand.id).join('", "')}"])]`)
     .then<Brand[]>(toBrandList)
 
-  const categories = await client.
-    fetch(groq`*[_type == 'category']`)
+  const categories = await client
+    .fetch(groq`*[_type == 'category']`)
     .then<Category[]>(toCategoryList)
 
   return {

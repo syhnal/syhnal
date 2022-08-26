@@ -1,12 +1,12 @@
 // installed
 import groq from "groq";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 
 // shared
-import { Product, Category, toCategoryList, toProductList, Brand, toBrandList, uniqueBrand } from "logic";
+import { Product, toProductList, Brand, toBrandList, uniqueBrand } from "logic";
 
 // local
-import { getClient, GetStaticProps, useStore } from '../../utils'
+import { getClient, useStore } from '../../utils'
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
 
 
@@ -60,15 +60,10 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     .then<Brand[]>(toBrandList)
     .then(brands => brands.filter(uniqueBrand))
 
-  const categories = await client
-    .fetch(groq`*[_type == 'category']`)
-    .then<Category[]>(toCategoryList)
-
   return {
     props: {
       products,
-      brands,
-      categories
+      brands
     },
     revalidate: 10,
   }

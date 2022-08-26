@@ -6,11 +6,7 @@ import { useStore } from "../../utils/store/store"
 import { CartLink } from "./CartLink"
 import { Logo } from "./Logo"
 
-interface NavBarProps {
-  categories: Category[]
-}
-
-const NavBar = ({ categories }: NavBarProps) => {
+const NavBar = () => {
   const store = useStore()
   const router = useRouter()
 

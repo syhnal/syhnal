@@ -1,5 +1,5 @@
 // installed
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import groq from "groq";
 import { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
 
 // local
 import { Title } from "../components";
-import { GetStaticProps, getClient, useStore } from '../utils'
+import { getClient, useStore } from '../utils'
 import Link from "next/link";
 import { useRouter } from 'next/router';
 
@@ -108,15 +108,10 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const current = (new Date()).getFullYear()
   const years = [...Array(200).keys()].map(num => current - num)
 
-  const categories = await client
-    .fetch(groq`*[_type == 'category']`)
-    .then<Category[]>(toCategoryList)
-
   return {
     props: {
       years,
-      brands,
-      categories
+      brands
     },
     revalidate: 10,
   }

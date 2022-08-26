@@ -1,5 +1,5 @@
 // installed
-import { GetStaticPaths, NextPage } from "next"
+import { GetStaticProps, GetStaticPaths, NextPage } from "next"
 import groq from "groq"
 
 // shared
@@ -7,7 +7,7 @@ import { Product, Brand, Category, toCategoryList, toProductList, toBrandList, u
 
 // local
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components"
-import { getClient, GetStaticProps, useStore } from "../../utils"
+import { getClient, useStore } from "../../utils"
 import Link from "next/link"
 
 
@@ -89,10 +89,6 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
   const category = await client
     .fetch(groq`*[_type == 'category' && slug.current == '${params?.slug}'][0]{...title}`)
 
-  const categories = await client
-    .fetch(groq`*[_type == 'category']`)
-    .then<Category[]>(toCategoryList)
-
   const brands = await client
     .fetch(groq`*[_type == 'product']{...brand->}`)
     .then<Brand[]>(toBrandList)
@@ -102,8 +98,7 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
     props: {
       products,
       category,
-      brands,
-      categories
+      brands
     },
     revalidate: 10
   }

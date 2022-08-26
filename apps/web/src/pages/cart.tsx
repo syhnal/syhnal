@@ -1,5 +1,5 @@
 // installed
-import { NextPage } from "next"
+import { GetStaticProps, NextPage } from "next"
 import { useState } from "react"
 import groq from "groq"
 
@@ -7,7 +7,7 @@ import groq from "groq"
 import { toProductList, Product, toCategoryList, Category, tgSendMessage } from "logic"
 
 // local
-import { useStore, getClient, GetStaticProps, tgConfig } from '../utils'
+import { useStore, getClient, tgConfig } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
 
@@ -170,14 +170,9 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     groq`*[_type == 'product']{..., brand->}`
   ).then<Product[]>(toProductList)
 
-  const categories = await client
-    .fetch(groq`*[_type == 'category']`)
-    .then<Category[]>(toCategoryList)
-
   return {
     props: {
-      products,
-      categories
+      products
     },
     revalidate: 10,
   }

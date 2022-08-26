@@ -1,15 +1,15 @@
 // installed
-import groq from "groq"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
 // shared
-import { toCategoryList, Category, tgSendMessage } from "logic"
+import { tgSendMessage } from "logic"
+import { Counter, ListItem } from "ui"
 
 // local
 import { Person, Title } from "../../components"
-import { getClient, GetStaticProps, tgConfig, useStore } from "../../utils"
-import { Counter, ListItem } from "ui"
+import { tgConfig, useStore } from "../../utils"
+
 
 const OrderCustomPage = () => {
   const store = useStore()
@@ -70,20 +70,5 @@ VIN: ${store.car.val.vin}
   )
 }
 
-const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const client = getClient(preview)
-
-  const categories = await client
-    .fetch(groq`*[_type == 'category']`)
-    .then<Category[]>(toCategoryList)
-
-  return {
-    props: {
-      categories
-    },
-    revalidate: 10
-  }
-}
 
 export default OrderCustomPage
-export { getStaticProps }

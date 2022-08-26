@@ -1,13 +1,13 @@
 // installed
 import groq from "groq"
-import { GetStaticPaths, NextPage } from "next"
+import { GetStaticPaths, GetStaticProps, NextPage } from "next"
 import { useState } from "react"
 
 // shared
-import { Product, tgSendMessage, toCategoryList, Category, toProduct } from "logic"
+import { Product, tgSendMessage, toProduct } from "logic"
 
 // local
-import { tgConfig, getClient, urlFor, GetStaticProps } from '../../utils'
+import { tgConfig, getClient } from '../../utils'
 import { Person, Title } from "../../components"
 import { Counter, ListItem } from "ui"
 
@@ -94,14 +94,10 @@ const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
     .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]{..., brand->}`)
     .then<Product>(data => toProduct(data))
 
-  const categories = await client
-    .fetch(groq`*[_type == 'category']`)
-    .then<Category[]>(toCategoryList)
 
   return {
     props: {
-      product,
-      categories
+      product
     },
     revalidate: 10
   }

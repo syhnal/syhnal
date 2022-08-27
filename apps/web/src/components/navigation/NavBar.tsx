@@ -18,11 +18,13 @@ const NavBar = () => {
         <div className="container-xl">
 
           <div className="mb-2 d-flex justify-content-between">
-            <span>Умань, ринок «Міщанка», павільйон 48</span>
-            <div className="fw-semibold">
-              <span className="me-4">murka_kr@ukr.net</span>
-              <span className="me-4">050 563 43 41</span>
-              <span>095 505 17 00</span>
+            <div>Умань, ринок «Міщанка», павільйон 48</div>
+            <div style={{ maxWidth: "500px" }}>
+              <div className="fw-semibold d-flex flex-wrap justify-content-end">
+                <div>murka_kr@ukr.net</div>
+                <div className='ms-2 ms-md-3'>050 563 43 41</div>
+                <div className='ms-2 ms-md-3'>095 505 17 00</div>
+              </div>
             </div>
           </div>
 

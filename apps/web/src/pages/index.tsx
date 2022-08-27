@@ -63,7 +63,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
         </div>
 
         <div className='mt-5'>
-          <h2 className='mb-3'>Новинки</h2>
+          <h2 className='mb-1'>Новинки</h2>
           <ProductList items={novelty} />
         </div>
 

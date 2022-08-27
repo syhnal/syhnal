@@ -24,19 +24,19 @@ const StockItem = ({ count, product }: StockItemProps) => {
 
   return (
     <ListItem header={product.title.ua} headerSize={6}>
-      <div className="row align-items-center">
-        <div className="col">
+      <div className="row align-items-center g-0">
+        <div className="col d-flex justify-content-start justify-content-md-around">
           <Counter count={count} setCount={setCount} />
         </div>
 
-        <div className="col d-flex justify-content-end">
+        <div className="col">
           <div style={{ fontWeight: 500 }}>
             від {product.price.from * count} грн
           </div>
         </div>
 
         <div className="col-auto">
-          <i className="bi bi-x-lg py-3 ps-3" style={{ cursor: "pointer" }}
+          <i className="bi bi-x-lg py-3 ps-1 ps-sm-3" style={{ cursor: "pointer" }}
             onClick={remove} />
         </div>
       </div>

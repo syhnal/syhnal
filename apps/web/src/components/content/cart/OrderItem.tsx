@@ -22,9 +22,9 @@ const OrderItem = ({ product }: OrderItemProps) => {
 
   return (
     <ListItem header={product.val.name}>
-      <div className="row align-items-center">
+      <div className="row align-items-center g-0">
 
-        <div className="col d-flex justify-content-around">
+        <div className="col d-flex justify-content-start justify-content-md-around">
           <Counter count={product.count} setCount={setCount} />
         </div>
 

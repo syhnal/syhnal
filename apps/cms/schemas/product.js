@@ -26,14 +26,12 @@ export default {
       title: 'Категорія',
       name: 'category',
       type: 'reference',
-      weak: true,
       to: [{ type: 'category' }]
     },
     {
       title: 'Бренд авто',
       name: 'brand',
       type: 'reference',
-      weak: true,
       to: [{ type: 'brand' }]
     },
     {

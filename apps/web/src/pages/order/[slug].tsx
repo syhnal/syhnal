@@ -31,7 +31,7 @@ ${surname} ${name} бажає замовити:
 ${product.title.ua}
 кількість: ${count} ${count > 1 ? `\nкожен від ${product.price.from} до ${product.price.to} грн` : ""}
 всього від ${product.price.from * count} до ${product.price.to * count} грн
-Телефон: ${phone}
+Телефон: +380${phone}
 `
 
     tgSendMessage(text, tgConfig)

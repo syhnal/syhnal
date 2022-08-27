@@ -20,6 +20,7 @@ const NavBar = () => {
           <div className="mb-2 d-flex justify-content-between">
             <span>Умань, ринок «Міщанка», павільйон 48</span>
             <div className="fw-semibold">
+              <span className="me-4">murka_kr@ukr.net</span>
               <span className="me-4">050 563 43 41</span>
               <span>095 505 17 00</span>
             </div>

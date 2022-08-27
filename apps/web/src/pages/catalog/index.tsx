@@ -3,10 +3,10 @@ import groq from "groq";
 import { GetStaticProps, NextPage } from "next";
 
 // shared
-import { Product, toProductList, Brand, toBrandList, uniqueBrand } from "logic";
+import { Product, toProductList, Brand, uniqueBrand } from "logic";
 
 // local
-import { getClient, useStore } from '../../utils'
+import { getClient, filterCatalog } from '../../utils'
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
 
 
@@ -16,14 +16,7 @@ interface CatalogProps {
 }
 
 const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
-  const store = useStore()
-  const start = store ? store.search.start.val.toLowerCase() : ""
-
-  const productList = products
-    .filter(product =>
-      product.title.ua.toLowerCase().startsWith(start) && store &&
-      product.brand.title.startsWith(store.search.brand.val)
-    )
+  const productList = filterCatalog(products)
 
   return (
     <div>

@@ -8,6 +8,7 @@ export * from "./telegram/config"
 
 // store
 export * from "./store/store"
+export * from "./store/filter"
 
 // types
 export * from "./types"

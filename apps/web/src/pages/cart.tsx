@@ -34,21 +34,13 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
     return 0
   }
 
+  const isValid = name.trim() != "" && surname.trim() != "" && phone.length == 9
+
   const order = () => {
     const trim = {
       name: name.trim(),
       surname: surname.trim(),
       phone: phone.trim()
-    }
-
-    if (phone.length != 9) {
-      alert("Будь ласка, перевірте номер телефону. Кількість цифр не є правильною.")
-      return
-    }
-
-    if (trim.name == "" || trim.surname == "") {
-      alert("Будь ласка, заповніть усі поля.")
-      return
     }
 
     let text = `${surname} ${name} бажає замовити:\n`
@@ -80,7 +72,7 @@ VIN: ${item.val.car.vin}
           }`
       }
 
-      text += `\n---------\nТелефон: ${phone}`
+      text += `\n---------\nТелефон: +380${phone}`
 
       tgSendMessage(text, tgConfig)
 
@@ -143,7 +135,8 @@ VIN: ${item.val.car.vin}
                     {store?.cart.stock.val.length}{store && store.cart.order.val.length > 0 ? ` + ${store?.cart.order.val.length}` : ""} товари
                   </small>
                   <h3 className="fw-bold text-primary my-3">від {price()} грн</h3>
-                  <button className="btn btn-dark-blue shadow-none" onClick={order}>Замовити</button>
+                  <button className="btn btn-dark-blue shadow-none" disabled={!isValid}
+                    onClick={order}>Замовити</button>
                 </div>
                 <div className="px-3">
                   <small>

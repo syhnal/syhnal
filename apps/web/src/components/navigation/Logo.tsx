@@ -8,7 +8,7 @@ const Logo = () => {
           style={{
             fontFamily: "Bender",
             backgroundColor: "black",
-            backgroundImage: "linear-gradient(180deg, rgba(20,117,188,1) 50%, rgba(252,220,9,1) 50%)",
+            backgroundImage: "linear-gradient(180deg, rgba(20,117,188,1) 57%, rgba(255,203,21,1) 43%)",
             WebkitBackgroundClip: "text",
             MozBackgroundClip: "text",
             WebkitTextFillColor: "transparent",

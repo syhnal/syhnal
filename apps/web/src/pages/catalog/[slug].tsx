@@ -7,7 +7,7 @@ import { Product, Brand, Category, toCategoryList, toProductList, toBrandList, u
 
 // local
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components"
-import { getClient, useStore } from "../../utils"
+import { filterCatalog, getClient, useStore } from "../../utils"
 import Link from "next/link"
 
 
@@ -21,14 +21,7 @@ interface CategoryCatalogProps {
 }
 
 const CategoryCatalog: NextPage<CategoryCatalogProps> = ({ products, category, brands }) => {
-  const store = useStore()
-  const start = store ? store.search.start.val.toLowerCase() : ""
-
-  const productList = products
-    .filter(product =>
-      product.title.ua.toLowerCase().startsWith(start) && store &&
-      product.brand.title.startsWith(store.search.brand.val)
-    )
+  const productList = filterCatalog(products)
 
   return (
     <>

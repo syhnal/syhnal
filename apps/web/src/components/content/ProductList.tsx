@@ -25,8 +25,9 @@ const ProductList = ({ items }: IProductListProps) => {
 
         return (
           <ListItem header={item.title.ua} key={item.id}>
-            <div className="d-flex justify-content-end gap-4 align-items-center">
-              <div className="fs-5 fw-semibold me-3">Від {item.price.from} грн</div>
+            <div className="d-flex justify-content-between justify-content-md-end
+            gap-1 gap-md-3 gap-lg-4 align-items-center">
+              <div className="fs-6 fs-md-5 fw-semibold me-0 me-lg-3">Від {item.price.from} грн</div>
               <Link href={`/order/${item.slug}`}>
                 <button className="btn btn-sm btn-main shadow-none">Замовити в 1 клік</button>
               </Link>

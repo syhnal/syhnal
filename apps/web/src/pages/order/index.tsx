@@ -36,7 +36,7 @@ VIN: ${store.car.val.vin}
 Модель: ${store.car.val.model}
 Марка: ${store.car.val.brand}
 Рік: ${store.car.val.year}
-Телефон: ${phone}
+Телефон: +380${phone}
 `
       tgSendMessage(text, tgConfig)
     }

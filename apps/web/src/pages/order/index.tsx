@@ -77,7 +77,7 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk' }) => {
   return {
     props: {
       langPack: {
-        navigation: require(`../langs/navigation/${lang}.json`)
+        navigation: require(`../../langs/navigation/${lang}.json`)
       },
     }
   }

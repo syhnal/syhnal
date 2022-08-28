@@ -22,7 +22,7 @@ const Layout: FC = ({ children }) => {
 
       <NavBar />
 
-      <div style={{ minHeight: "69vh" }}>
+      <div style={{ minHeight: "68vh" }}>
         {children}
       </div>
 

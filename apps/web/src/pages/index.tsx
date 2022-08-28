@@ -8,12 +8,12 @@ import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, u
 
 // local
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
-import { urlFor, getClient, toLocale, GetStaticProps } from '../utils'
+import { urlFor, getClient, toLocale, GetStaticProps, ILangPack } from '../utils'
 import Image from 'next/image'
 
 
 interface IHomeProps {
-  langPackt: any
+  langPack: ILangPack
   novelty: Product[]
   brands: {
     stock: Brand[]
@@ -22,8 +22,8 @@ interface IHomeProps {
   categories: Category[]
 }
 
-const HomePage: NextPage<IHomeProps> = ({ langPackt, brands, novelty, categories }) => {
-  console.log(langPackt)
+const HomePage: NextPage<IHomeProps> = ({ langPack, brands, novelty, categories }) => {
+  console.log(langPack)
 
   return (
     <div>
@@ -35,16 +35,16 @@ const HomePage: NextPage<IHomeProps> = ({ langPackt, brands, novelty, categories
           ru locale
         </Link>
 
-        <Banner header='Автозапчастини під замовлення' btn='Замовити' />
+        <Banner />
 
         <div className='mt-5'>
           <div className='row row-cols-1 row-cols-md-2 g-5'>
             <div className='pe-md-5'>
-              <h2 className='mb-3'>{langPackt.order}</h2>
+              <h2 className='mb-3'>{langPack.home.order}</h2>
               <StockBrandList items={brands.stock} />
             </div>
             <div className='ps-md-5'>
-              <h2 className='mb-3'>{langPackt.stock}</h2>
+              <h2 className='mb-3'>{langPack.home.stock}</h2>
               <CustomBrandList items={brands.order} />
             </div>
           </div>
@@ -52,7 +52,7 @@ const HomePage: NextPage<IHomeProps> = ({ langPackt, brands, novelty, categories
         </div>
 
         <div className='mt-5'>
-          <h2 className='text-center mb-4'>Категорії</h2>
+          <h2 className='text-center mb-4'>{langPack.home.categories}</h2>
           <div className='row row-cols-2 row-cols-md-3 g-3 g-sm-4 g-md-5'>
             {categories.map(category =>
               <Link href={`/catalog/${category.slug}`} key={category.id}>
@@ -111,15 +111,14 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
     .fetch(groq`*[_type == 'category']`)
     .then<Category[]>(data => toCategoryList(data, lang))
 
-  const langPackt = require(`../langs/home/${lang}.json`)
-
   return {
     props: {
       langPack: {
-        navigation: require(`../langs/navigation/${lang}.json`)
+        navigation: require(`../langs/navigation/${lang}.json`),
+        home: require(`../langs/home/${lang}.json`),
+        productList: require(`../langs/components/ProductList/${lang}.json`)
       },
       locale,
-      langPackt,
       novelty,
       brands: {
         stock: stockBrands,

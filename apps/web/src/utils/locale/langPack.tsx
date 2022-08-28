@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 import { createContext, FC, useContext } from 'react';
 
-interface ILangPack {
+export interface ILangPack {
   navigation: {
     [key: string]: string
   },

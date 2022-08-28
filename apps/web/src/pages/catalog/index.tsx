@@ -56,7 +56,9 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
   return {
     props: {
       langPack: {
-        navigation: require(`../langs/navigation/${lang}.json`)
+        navigation: require(`../../langs/navigation/${lang}.json`),
+        productList: require(`../../langs/components/ProductList/${lang}.json`),
+        catalog: require(`../../langs/catalog/${lang}.json`)
       },
       products,
       brands

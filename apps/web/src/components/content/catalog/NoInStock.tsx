@@ -1,13 +1,16 @@
 import Link from "next/link"
+import { useLangPack } from '../../../utils'
 
 const NoInStock = () => {
+  const langPack = useLangPack()
+
   return (
     <div className="text-center">
-      <h2 className="mb-5">Нажаль, такої запчастини немає в наявності</h2>
+      <h2 className="mb-5">{langPack.catalog.noInStock}</h2>
       <div className="d-flex justify-content-center gap-3 gap-md-5 align-items-center">
-        <h2>Ви можете її замовити</h2>
+        <h2>{langPack.catalog.canOrder}</h2>
         <Link href={`/custom`}>
-          <div className="btn btn-lg btn-dark-blue shadow-none">Замовити</div>
+          <div className="btn btn-lg btn-dark-blue shadow-none">{langPack.catalog.order}</div>
         </Link>
       </div>
     </div>

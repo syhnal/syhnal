@@ -3,7 +3,7 @@ import { GetStaticPaths, NextPage } from "next"
 import groq from "groq"
 
 // shared
-import { Product, Brand, toProductList, toBrandList, uniqueBrand } from "logic"
+import { Product, Brand, toProductList, toBrandList, uniqueBrand, Category } from "logic"
 
 // local
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components"
@@ -14,15 +14,11 @@ import Link from "next/link"
 interface CategoryCatalogProps {
   products: Product[]
   brands: Brand[]
-  category: {
-    ua: string
-    ru: string
-  }
+  category: string
 }
 
 const CategoryCatalog: NextPage<CategoryCatalogProps> = ({ products, category, brands }) => {
   const productList = filterCatalog(products)
-
   return (
     <>
       <Title val="Каталог" />
@@ -34,9 +30,9 @@ const CategoryCatalog: NextPage<CategoryCatalogProps> = ({ products, category, b
               <li className="breadcrumb-item">
                 <Link href="/catalog">Каталог</Link>
               </li>
-              <li className="breadcrumb-item">{category.ua}</li>
+              <li className="breadcrumb-item">{category}</li>
             </ol>
-            <h2 className="mb-0">{category.ua}</h2>
+            <h2 className="mb-0">{category}</h2>
           </div>
           <div><SearchBrand brands={brands} /></div>
         </div>
@@ -82,6 +78,7 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', params, preview =
 
   const category = await client
     .fetch(groq`*[_type == 'category' && slug.current == '${params?.slug}'][0]{...title}`)
+    .then(data => data[lang])
 
   const brands: Brand[] = products
     .map(product => product.brand)
@@ -90,7 +87,9 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', params, preview =
   return {
     props: {
       langPack: {
-        navigation: require(`../langs/navigation/${lang}.json`)
+        navigation: require(`../../langs/navigation/${lang}.json`),
+        productList: require(`../../langs/components/ProductList/${lang}.json`),
+        catalog: require(`../../langs/catalog/${lang}.json`)
       },
       products,
       category,

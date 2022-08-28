@@ -7,8 +7,7 @@ const filterCatalog = (products: Product[]): Product[] => {
 
   return products
     .filter(product =>
-      (product.title.title.toLowerCase().startsWith(start) ||
-        product.title.ru.toLowerCase().startsWith(start)) &&
+      product.title.toLowerCase().startsWith(start) &&
       store && product.brand.title.startsWith(store.search.brand.val)
     )
 

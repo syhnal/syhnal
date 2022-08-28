@@ -7,7 +7,7 @@ import { useState } from "react"
 import { Product, tgSendMessage, toProduct } from "logic"
 
 // local
-import { tgConfig, getClient } from '../../utils'
+import { tgConfig, getClient, toLocale } from '../../utils'
 import { Person, Title } from "../../components"
 import { Counter, ListItem } from "ui"
 
@@ -28,7 +28,7 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
   const order = () => {
     const text = `
 ${surname} ${name} бажає замовити:
-${product.title.uk}
+${product.title}
 кількість: ${count} ${count > 1 ? `\nкожен від ${product.price.from} до ${product.price.to} грн` : ""}
 всього від ${product.price.from * count} до ${product.price.to * count} грн
 Телефон: +380${phone}
@@ -43,7 +43,7 @@ ${product.title.uk}
 
       <div className="container-xl" style={{ minHeight: "68vh" }}>
         <h2>Замовити в один клік</h2>
-        <ListItem header={product.title.uk}>
+        <ListItem header={product.title}>
           <div className="row">
             <div className="col d-flex justify-content-end">
               <Counter count={count} setCount={setCount} />
@@ -87,12 +87,13 @@ const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ locale = 'uk', params, preview = false }) => {
   const client = getClient(preview)
+  const lang = toLocale(locale)
 
   const product = await client
     .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]{..., brand->}`)
-    .then<Product>(data => toProduct(data))
+    .then<Product>(data => toProduct(data, lang))
 
   return {
     props: {

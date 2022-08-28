@@ -23,7 +23,7 @@ const StockItem = ({ count, product }: StockItemProps) => {
   }
 
   return (
-    <ListItem header={product.title.uk} headerSize={6}>
+    <ListItem header={product.title.title} headerSize={6}>
       <div className="row align-items-center g-0">
         <div className="col d-flex justify-content-start justify-content-md-around">
           <Counter count={count} setCount={setCount} />

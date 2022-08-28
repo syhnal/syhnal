@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
-
-type Locale = "uk" | "ru";
+import { Locale } from 'logic';
 
 const useLocale = (): Locale => {
   const { locale = 'uk' } = useRouter()
@@ -9,4 +8,4 @@ const useLocale = (): Locale => {
 
 const toLocale = (locale: string): Locale => locale as Locale;
 
-export { useLocale }
+export { useLocale, toLocale }

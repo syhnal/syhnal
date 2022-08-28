@@ -8,12 +8,11 @@ import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, u
 
 // local
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
-import { urlFor, getClient } from '../utils'
+import { urlFor, getClient, toLocale } from '../utils'
 import Image from 'next/image'
 
 
 interface IHomeProps {
-  locale: any
   novelty: Product[]
   brands: {
     stock: Brand[]
@@ -22,8 +21,7 @@ interface IHomeProps {
   categories: Category[]
 }
 
-const HomePage: NextPage<IHomeProps> = ({ locale, brands, novelty, categories }) => {
-  console.log(locale)
+const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
   return (
     <div>
       <Title val='Сигнал' />
@@ -60,7 +58,7 @@ const HomePage: NextPage<IHomeProps> = ({ locale, brands, novelty, categories })
                     {category.img ?
                       <Image src={urlFor(category.img).url()} className="card-img-top" width={900} height={600} />
                       : null}
-                    <h5 className='card-title text-center'>{category.title.uk}</h5>
+                    <h5 className='card-title text-center'>{category.title}</h5>
                   </div>
                 </a>
               </Link>
@@ -91,10 +89,11 @@ const HomePage: NextPage<IHomeProps> = ({ locale, brands, novelty, categories })
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
+  const lang = toLocale(locale);
 
   const novelty = await client
     .fetch(groq`*[_type == 'product'] | order(_createdAt asc)[0...5]{..., brand->}`)
-    .then<Product[]>(toProductList)
+    .then<Product[]>(data => toProductList(data, lang))
 
   const stockBrands = await client
     .fetch(groq`*[_type == 'product']{...brand->}`)
@@ -107,7 +106,7 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
 
   const categories = await client
     .fetch(groq`*[_type == 'category']`)
-    .then<Category[]>(toCategoryList)
+    .then<Category[]>(data => toCategoryList(data, lang))
 
   // const lang = require(`../langs/${locale}.json`)
 

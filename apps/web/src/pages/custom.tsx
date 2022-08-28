@@ -98,7 +98,7 @@ const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
   )
 }
 
-const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
 
   const brands = await client

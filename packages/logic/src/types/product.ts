@@ -1,11 +1,9 @@
 import { Brand, toBrand } from "./brand"
+import { Locale } from './locale'
 
 export interface Product {
   id: string
-  title: {
-    uk: string
-    ru: string
-  }
+  title: string
   price: {
     from: number
     to: number
@@ -50,13 +48,10 @@ export interface Product {
 }
 */
 
-const toProduct = (data: any): Product => {
+const toProduct = (data: any, locale: Locale): Product => {
   let product: Product = {
     id: data._id,
-    title: {
-      uk: data.title.uk,
-      ru: data.title.ru
-    },
+    title: data.title[locale],
     price: {
       from: data.price.from,
       to: data.price.to
@@ -68,7 +63,7 @@ const toProduct = (data: any): Product => {
   return product
 }
 
-const toProductList = (data: any): Product[] =>
-  data.map((product: any) => toProduct(product))
+const toProductList = (data: any, locale: Locale): Product[] =>
+  data.map((product: any) => toProduct(product, locale))
 
 export { toProduct, toProductList }

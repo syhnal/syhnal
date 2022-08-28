@@ -7,7 +7,7 @@ import { Product, Brand, Category, toCategoryList, toProductList, toBrandList, u
 
 // local
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components"
-import { filterCatalog, getClient, useStore } from "../../utils"
+import { filterCatalog, getClient, toLocale, useStore } from "../../utils"
 import Link from "next/link"
 
 
@@ -72,12 +72,13 @@ const getStaticPaths: GetStaticPaths = async () => {
 }
 
 
-const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ locale = 'uk', params, preview = false }) => {
   const client = getClient(preview)
+  const lang = toLocale(locale)
 
   const products = await client
     .fetch(groq`*[_type == 'product' && category->slug.current == '${params?.slug}']{..., brand->}`)
-    .then<Product[]>(data => toProductList(data))
+    .then<Product[]>(data => toProductList(data, lang))
 
   const category = await client
     .fetch(groq`*[_type == 'category' && slug.current == '${params?.slug}'][0]{...title}`)

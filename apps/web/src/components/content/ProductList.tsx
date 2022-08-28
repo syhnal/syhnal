@@ -26,7 +26,7 @@ const ProductList = ({ items }: IProductListProps) => {
         const inCart = store?.cart.stock.val.some(some => some.val == item.id)
 
         return (
-          <ListItem header={item.title.uk} key={item.id}>
+          <ListItem header={item.title} key={item.id}>
             <div className="d-flex justify-content-between justify-content-md-end
             gap-1 gap-md-3 gap-lg-4 align-items-center">
               <div className="fs-6 fs-md-5 fw-semibold me-0 me-lg-3">Від {item.price.from} грн</div>

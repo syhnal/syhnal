@@ -7,7 +7,7 @@ import groq from "groq"
 import { toProductList, Product, toCategoryList, Category, tgSendMessage } from "logic"
 
 // local
-import { useStore, getClient, tgConfig } from '../utils'
+import { useStore, getClient, tgConfig, toLocale } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
 
@@ -50,7 +50,7 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
         text += `Товари в наявності:
 ${store.cart.stock.val.map(item => {
           const product = products.find(product => item.val == product.id)
-          const line = product ? `${product.title.uk} кіл-ть: ${item.count}` : ""
+          const line = product ? `${product.title} кіл-ть: ${item.count}` : ""
           console.log(line)
           return line
         }).join("\n")}
@@ -156,12 +156,13 @@ VIN: ${item.val.car.vin}
   )
 }
 
-const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
+  const lang = toLocale(locale)
 
   const products = await client.fetch(
     groq`*[_type == 'product']{..., brand->}`
-  ).then<Product[]>(toProductList)
+  ).then<Product[]>(data => toProductList(data, lang))
 
   return {
     props: {

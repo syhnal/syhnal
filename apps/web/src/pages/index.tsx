@@ -27,10 +27,10 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
       <Title val='Сигнал' />
 
       <div className='container-xl'>
-        <Link href={`/`} locale="ru">
+        {/* <Link href={`/`} locale="ru">
 
           ru locale
-        </Link>
+        </Link> */}
 
         <Banner />
 

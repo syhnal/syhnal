@@ -1,5 +1,5 @@
 // installed
-import type { GetStaticProps, NextPage } from 'next'
+import type { NextPage } from 'next'
 import Link from 'next/link'
 import groq from 'groq'
 
@@ -8,11 +8,12 @@ import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, u
 
 // local
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
-import { urlFor, getClient, toLocale } from '../utils'
+import { urlFor, getClient, toLocale, GetStaticProps } from '../utils'
 import Image from 'next/image'
 
 
 interface IHomeProps {
+  langPackt: any
   novelty: Product[]
   brands: {
     stock: Brand[]
@@ -21,7 +22,9 @@ interface IHomeProps {
   categories: Category[]
 }
 
-const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
+const HomePage: NextPage<IHomeProps> = ({ langPackt, brands, novelty, categories }) => {
+  console.log(langPackt)
+
   return (
     <div>
       <Title val='Сигнал' />
@@ -32,16 +35,16 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
           ru locale
         </Link>
 
-        <Banner />
+        <Banner header='Автозапчастини під замовлення' btn='Замовити' />
 
         <div className='mt-5'>
           <div className='row row-cols-1 row-cols-md-2 g-5'>
             <div className='pe-md-5'>
-              <h2 className='mb-3'>В наявності</h2>
+              <h2 className='mb-3'>{langPackt.order}</h2>
               <StockBrandList items={brands.stock} />
             </div>
             <div className='ps-md-5'>
-              <h2 className='mb-3'>Під замовлення</h2>
+              <h2 className='mb-3'>{langPackt.stock}</h2>
               <CustomBrandList items={brands.order} />
             </div>
           </div>
@@ -108,11 +111,15 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
     .fetch(groq`*[_type == 'category']`)
     .then<Category[]>(data => toCategoryList(data, lang))
 
-  // const lang = require(`../langs/${locale}.json`)
+  const langPackt = require(`../langs/home/${lang}.json`)
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../langs/navigation/${lang}.json`)
+      },
       locale,
+      langPackt,
       novelty,
       brands: {
         stock: stockBrands,

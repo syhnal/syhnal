@@ -1,5 +1,5 @@
 // installed
-import { GetStaticProps, NextPage } from "next";
+import { NextPage } from "next";
 import groq from "groq";
 import { useEffect, useState } from "react";
 
@@ -9,8 +9,7 @@ import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
 
 // local
 import { Title } from "../components";
-import { getClient, useStore } from '../utils'
-import Link from "next/link";
+import { getClient, useStore, GetStaticProps, toLocale } from '../utils'
 import { useRouter } from 'next/router';
 
 
@@ -100,6 +99,7 @@ const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
+  const lang = toLocale(locale);
 
   const brands = await client
     .fetch(groq`*[_type == 'brand']`)
@@ -110,6 +110,9 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../langs/navigation/${lang}.json`)
+      },
       years,
       brands
     },

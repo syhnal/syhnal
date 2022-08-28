@@ -1,12 +1,12 @@
 // installed
 import groq from "groq";
-import { GetStaticProps, NextPage } from "next";
+import { NextPage } from "next";
 
 // shared
 import { Product, toProductList, Brand, uniqueBrand } from "logic";
 
 // local
-import { getClient, filterCatalog, toLocale } from '../../utils'
+import { getClient, filterCatalog, GetStaticProps, toLocale } from '../../utils'
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
 
 
@@ -55,6 +55,9 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../langs/navigation/${lang}.json`)
+      },
       products,
       brands
     },

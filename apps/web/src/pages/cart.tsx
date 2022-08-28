@@ -1,13 +1,13 @@
 // installed
-import { GetStaticProps, NextPage } from "next"
+import { NextPage } from "next"
 import { useState } from "react"
 import groq from "groq"
 
 // shared
-import { toProductList, Product, toCategoryList, Category, tgSendMessage } from "logic"
+import { toProductList, Product, tgSendMessage } from "logic"
 
 // local
-import { useStore, getClient, tgConfig, toLocale } from '../utils'
+import { useStore, getClient, tgConfig, toLocale, GetStaticProps } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
 
@@ -166,6 +166,9 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../langs/navigation/${lang}.json`)
+      },
       products
     },
     revalidate: 10,

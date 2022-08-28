@@ -8,7 +8,7 @@ import { Counter, ListItem } from "ui"
 
 // local
 import { Person, Title } from "../../components"
-import { tgConfig, useStore } from "../../utils"
+import { GetStaticProps, tgConfig, toLocale, useStore } from "../../utils"
 import { NextPage } from 'next'
 
 
@@ -71,4 +71,17 @@ VIN: ${store.car.val.vin}
   )
 }
 
+const getStaticProps: GetStaticProps = async ({ locale = 'uk' }) => {
+  const lang = toLocale(locale)
+
+  return {
+    props: {
+      langPack: {
+        navigation: require(`../langs/navigation/${lang}.json`)
+      },
+    }
+  }
+}
+
 export default OrderCustomPage
+export { getStaticProps }

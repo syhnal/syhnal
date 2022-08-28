@@ -15,3 +15,4 @@ export * from "./types"
 
 // locale
 export * from "./locale/useLocale"
+export * from "./locale/langPack"

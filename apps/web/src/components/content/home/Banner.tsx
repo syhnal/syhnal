@@ -7,8 +7,8 @@ const Banner = () => {
       <Image className='rounded '
         objectFit='cover'
         objectPosition='50% 80%'
-        alt='Banner'
-        src='/banner.png'
+        alt='Banner' src='/banner.png'
+        priority={true}
         width={1260} height={500} layout='responsive'
       />
 

@@ -50,7 +50,7 @@ const Cart: NextPage<ICartProps> = ({ products }) => {
         text += `Товари в наявності:
 ${store.cart.stock.val.map(item => {
           const product = products.find(product => item.val == product.id)
-          const line = product ? `${product.title.ua} кіл-ть: ${item.count}` : ""
+          const line = product ? `${product.title.uk} кіл-ть: ${item.count}` : ""
           console.log(line)
           return line
         }).join("\n")}

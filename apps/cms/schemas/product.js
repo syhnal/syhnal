@@ -12,7 +12,7 @@ export default {
       fields: [
         {
           title: 'Українською',
-          name: 'ua',
+          name: 'uk',
           type: 'string'
         },
         {

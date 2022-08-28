@@ -4,7 +4,6 @@ import Link from 'next/link'
 import groq from 'groq'
 
 // shared
-import { Article } from 'ui'
 import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
 
 // local
@@ -14,6 +13,7 @@ import Image from 'next/image'
 
 
 interface IHomeProps {
+  locale: any
   novelty: Product[]
   brands: {
     stock: Brand[]
@@ -22,12 +22,18 @@ interface IHomeProps {
   categories: Category[]
 }
 
-const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
+const HomePage: NextPage<IHomeProps> = ({ locale, brands, novelty, categories }) => {
+  console.log(locale)
   return (
     <div>
       <Title val='Сигнал' />
 
       <div className='container-xl'>
+        <Link href={`/`} locale="ru">
+
+          ru locale
+        </Link>
+
         <Banner />
 
         <div className='mt-5'>
@@ -54,7 +60,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
                     {category.img ?
                       <Image src={urlFor(category.img).url()} className="card-img-top" width={900} height={600} />
                       : null}
-                    <h5 className='card-title text-center'>{category.title.ua}</h5>
+                    <h5 className='card-title text-center'>{category.title.uk}</h5>
                   </div>
                 </a>
               </Link>
@@ -83,7 +89,7 @@ const HomePage: NextPage<IHomeProps> = ({ brands, novelty, categories }) => {
   )
 }
 
-const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
 
   const novelty = await client
@@ -103,8 +109,11 @@ const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     .fetch(groq`*[_type == 'category']`)
     .then<Category[]>(toCategoryList)
 
+  // const lang = require(`../langs/${locale}.json`)
+
   return {
     props: {
+      locale,
       novelty,
       brands: {
         stock: stockBrands,

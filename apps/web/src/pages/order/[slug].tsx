@@ -28,7 +28,7 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
   const order = () => {
     const text = `
 ${surname} ${name} бажає замовити:
-${product.title.ua}
+${product.title.uk}
 кількість: ${count} ${count > 1 ? `\nкожен від ${product.price.from} до ${product.price.to} грн` : ""}
 всього від ${product.price.from * count} до ${product.price.to * count} грн
 Телефон: +380${phone}
@@ -43,7 +43,7 @@ ${product.title.ua}
 
       <div className="container-xl" style={{ minHeight: "68vh" }}>
         <h2>Замовити в один клік</h2>
-        <ListItem header={product.title.ua}>
+        <ListItem header={product.title.uk}>
           <div className="row">
             <div className="col d-flex justify-content-end">
               <Counter count={count} setCount={setCount} />

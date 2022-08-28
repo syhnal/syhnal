@@ -1,7 +1,7 @@
 export interface Category {
   id: string
   title: {
-    ua: string
+    uk: string
     ru: string
   }
   img?: any
@@ -12,7 +12,7 @@ const toCategory = (data: any): Category => {
   let category: Category = {
     id: data._id,
     title: {
-      ua: data.title.ua,
+      uk: data.title.uk,
       ru: data.title.ru
     },
     slug: data.slug.current

@@ -1,7 +1,9 @@
 import { Product } from "logic"
 import Link from "next/link"
+import { useRouter } from 'next/router'
 import { MouseEventHandler } from "react"
 import { ListItem } from "ui"
+import { useLocale } from '../../utils'
 import { urlFor } from "../../utils/cms/sanity"
 import { useStore } from "../../utils/store/store"
 
@@ -24,7 +26,7 @@ const ProductList = ({ items }: IProductListProps) => {
         const inCart = store?.cart.stock.val.some(some => some.val == item.id)
 
         return (
-          <ListItem header={item.title.ua} key={item.id}>
+          <ListItem header={item.title.uk} key={item.id}>
             <div className="d-flex justify-content-between justify-content-md-end
             gap-1 gap-md-3 gap-lg-4 align-items-center">
               <div className="fs-6 fs-md-5 fw-semibold me-0 me-lg-3">Від {item.price.from} грн</div>

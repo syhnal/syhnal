@@ -3,7 +3,7 @@ import { Brand, toBrand } from "./brand"
 export interface Product {
   id: string
   title: {
-    ua: string
+    uk: string
     ru: string
   }
   price: {
@@ -54,7 +54,7 @@ const toProduct = (data: any): Product => {
   let product: Product = {
     id: data._id,
     title: {
-      ua: data.title.ua,
+      uk: data.title.uk,
       ru: data.title.ru
     },
     price: {

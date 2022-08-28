@@ -12,3 +12,6 @@ export * from "./store/filter"
 
 // types
 export * from "./types"
+
+// locale
+export * from "./locale/useLocale"

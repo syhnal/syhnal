@@ -8,11 +8,14 @@ import { Counter, ListItem } from "ui"
 
 // local
 import { Person, Title } from "../../components"
-import { GetStaticProps, tgConfig, toLocale, useStore } from "../../utils"
+import { GetStaticProps, ILangPack, tgConfig, toLocale, useStore } from "../../utils"
 import { NextPage } from 'next'
 
+interface OrderCustomPageProps {
+  langPack: ILangPack
+}
 
-const OrderCustomPage: NextPage = () => {
+const OrderCustomPage: NextPage<OrderCustomPageProps> = ({ langPack }) => {
   const store = useStore()
   const router = useRouter()
 
@@ -46,7 +49,7 @@ VIN: ${store.car.val.vin}
     <>
       <Title val="Замовити в один клік" />
       <div className="container-xl" style={{ minHeight: "65vh" }}>
-        <h2>Замовити в один клік</h2>
+        <h2>{langPack.order.header}</h2>
 
         {product
           ? <ListItem header={product.toString()}>
@@ -64,7 +67,7 @@ VIN: ${store.car.val.vin}
 
         <div className="d-flex justify-content-center mt-3">
           <button className="btn btn-dark-blue btn-lg" disabled={!isValid}
-            onClick={order}>Замовити</button>
+            onClick={order}>{langPack.order.order}</button>
         </div>
       </div>
     </>
@@ -77,7 +80,9 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk' }) => {
   return {
     props: {
       langPack: {
-        navigation: require(`../../langs/navigation/${lang}.json`)
+        navigation: require(`../../langs/navigation/${lang}.json`),
+        person: require(`../../langs/components/Person/${lang}.json`),
+        order: require(`../../langs/order/${lang}.json`)
       },
     }
   }

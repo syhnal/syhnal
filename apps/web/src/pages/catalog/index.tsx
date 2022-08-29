@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import { Product, toProductList, Brand, uniqueBrand } from "logic";
 
 // local
-import { getClient, filterCatalog, GetStaticProps, toLocale } from '../../utils'
+import { getClient, filterCatalog, GetStaticProps, toLang } from '../../utils'
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
 
 
@@ -43,7 +43,7 @@ const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale)
+  const lang = toLang(locale)
 
   const products = await client.fetch(
     groq`*[_type == 'product']{..., brand->}`

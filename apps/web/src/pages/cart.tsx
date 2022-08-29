@@ -7,7 +7,7 @@ import groq from "groq"
 import { toProductList, Product, tgSendMessage } from "logic"
 
 // local
-import { useStore, getClient, tgConfig, toLocale, GetStaticProps, ILangPack } from '../utils'
+import { useStore, getClient, tgConfig, toLang, GetStaticProps, ILangPack } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
 
@@ -160,7 +160,7 @@ VIN: ${item.val.car.vin}
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale)
+  const lang = toLang(locale)
 
   const products = await client.fetch(
     groq`*[_type == 'product']{..., brand->}`

@@ -4,7 +4,7 @@ const Logo = () => {
   return (
     <div>
       <Link href="/">
-        <a className="fs-3 text-dark"
+        <a className="fs-2 text-dark"
           style={{
             fontFamily: "Bender",
             backgroundColor: "black",
@@ -13,7 +13,7 @@ const Logo = () => {
             MozBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }} >
-          СИГНАЛ
+          С<span className='d-none d-sm-inline'>ИГНАЛ</span>
         </a>
       </Link>
     </div>

@@ -7,7 +7,7 @@ import { useState } from "react"
 import { Product, tgSendMessage, toProduct } from "logic"
 
 // local
-import { tgConfig, getClient, GetStaticProps, toLocale, ILangPack } from '../../utils'
+import { tgConfig, getClient, GetStaticProps, toLang, ILangPack } from '../../utils'
 import { Person, Title } from "../../components"
 import { Counter, ListItem } from "ui"
 
@@ -90,7 +90,7 @@ const getStaticPaths: GetStaticPaths = async () => {
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', params, preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale)
+  const lang = toLang(locale)
 
   const product = await client
     .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]{..., brand->}`)

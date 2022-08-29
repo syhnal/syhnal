@@ -8,7 +8,7 @@ import { Counter, ListItem } from "ui"
 
 // local
 import { Person, Title } from "../../components"
-import { GetStaticProps, ILangPack, tgConfig, toLocale, useStore } from "../../utils"
+import { GetStaticProps, ILangPack, tgConfig, toLang, useStore } from "../../utils"
 import { NextPage } from 'next'
 
 interface OrderCustomPageProps {
@@ -75,7 +75,7 @@ VIN: ${store.car.val.vin}
 }
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk' }) => {
-  const lang = toLocale(locale)
+  const lang = toLang(locale)
 
   return {
     props: {

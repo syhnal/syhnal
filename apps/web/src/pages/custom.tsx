@@ -9,7 +9,7 @@ import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
 
 // local
 import { Title } from "../components";
-import { getClient, useStore, GetStaticProps, toLocale, ILangPack } from '../utils'
+import { getClient, useStore, GetStaticProps, toLang, ILangPack } from '../utils'
 import { useRouter } from 'next/router';
 
 
@@ -100,7 +100,7 @@ const CustomPage: NextPage<CustomPageProps> = ({ langPack, years, brands }) => {
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale);
+  const lang = toLang(locale);
 
   const brands = await client
     .fetch(groq`*[_type == 'brand']`)

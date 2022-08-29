@@ -1,5 +1,5 @@
 import { Locale } from 'logic';
 
-const toLocale = (locale: string): Locale => locale as Locale;
+const toLang = (locale: string): Locale => locale as Locale;
 
-export { toLocale }
+export { toLang }

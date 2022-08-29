@@ -3,6 +3,7 @@ import { IconInput } from "ui"
 import { useLangPack } from '../../utils'
 import { useStore } from "../../utils/store/store"
 import { CartLink } from "./CartLink"
+import { LangSwitch } from './LangSwitch'
 import { Logo } from "./Logo"
 
 const NavBar = () => {
@@ -37,7 +38,11 @@ const NavBar = () => {
                 val={store.search.start.val} setVal={store.search.start.set}
                 enterClick={search} />
               : null}
-            <div className='ms-3 ms-md-5'>
+
+            <div className='mx-3 mx-md-5'>
+              <LangSwitch />
+            </div>
+            <div>
               <CartLink count={store ?
                 store.cart.stock.val.length + store.cart.order.val.length
                 : 0} />

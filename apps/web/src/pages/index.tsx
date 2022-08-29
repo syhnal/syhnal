@@ -8,7 +8,7 @@ import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, u
 
 // local
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
-import { urlFor, getClient, toLocale, GetStaticProps, ILangPack } from '../utils'
+import { urlFor, getClient, toLang, GetStaticProps, ILangPack } from '../utils'
 import Image from 'next/image'
 
 
@@ -28,11 +28,6 @@ const HomePage: NextPage<IHomeProps> = ({ langPack, brands, novelty, categories 
       <Title val='Сигнал' />
 
       <div className='container-xl'>
-        <Link href={`/`} locale="ru">
-
-          ru locale
-        </Link>
-
         <Banner />
 
         <div className='mt-5'>
@@ -90,7 +85,7 @@ const HomePage: NextPage<IHomeProps> = ({ langPack, brands, novelty, categories 
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale);
+  const lang = toLang(locale);
 
   const novelty = await client
     .fetch(groq`*[_type == 'product'] | order(_createdAt asc)[0...5]{..., brand->}`)

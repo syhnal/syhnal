@@ -1,22 +1,18 @@
-// installed
 import groq from "groq"
-import { GetStaticPaths, GetStaticProps, NextPage } from "next"
+import { GetStaticPaths, NextPage } from "next"
 import { useState } from "react"
-
-// shared
 import { Product, tgSendMessage, toProduct } from "logic"
-
-// local
-import { tgConfig, getClient, toLocale } from '../../utils'
-import { Person, Title } from "../../components"
 import { Counter, ListItem } from "ui"
+import { tgConfig, getClient, GetStaticProps, toLang, ILangPack } from '../../utils'
+import { Person, Title } from "../../components"
 
 
 interface OrderPageProps {
+  langPack: ILangPack
   product: Product
 }
 
-const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
+const OrderPage: NextPage<OrderPageProps> = ({ langPack, product }) => {
   const [count, setCount] = useState(1)
 
   const [name, setName] = useState("")
@@ -42,7 +38,7 @@ ${product.title}
       <Title val="Замовити в 1 клік" />
 
       <div className="container-xl" style={{ minHeight: "68vh" }}>
-        <h2>Замовити в один клік</h2>
+        <h2>{langPack.order.header}</h2>
         <ListItem header={product.title}>
           <div className="row">
             <div className="col d-flex justify-content-end">
@@ -51,7 +47,7 @@ ${product.title}
 
             <div className="col d-flex justify-content-end align-items-center">
               <div className="fs-5 fw-semibold">
-                від {product.price.from * count} грн
+                {langPack.order.from} {product.price.from * count} грн
               </div>
             </div>
 
@@ -66,7 +62,7 @@ ${product.title}
 
         <div className="d-flex justify-content-center mt-3">
           <button className='btn btn-lg btn-dark-blue'
-            onClick={order} disabled={!isValid}>Замовити</button>
+            onClick={order} disabled={!isValid}>{langPack.order.order}</button>
         </div>
       </div>
     </div>
@@ -89,7 +85,7 @@ const getStaticPaths: GetStaticPaths = async () => {
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', params, preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale)
+  const lang = toLang(locale)
 
   const product = await client
     .fetch(groq`*[_type == 'product' && slug.current == '${params?.slug}'][0]{..., brand->}`)
@@ -97,6 +93,11 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', params, preview =
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../../langs/navigation/${lang}.json`),
+        person: require(`../../langs/components/Person/${lang}.json`),
+        order: require(`../../langs/order/${lang}.json`)
+      },
       product
     },
     revalidate: 10

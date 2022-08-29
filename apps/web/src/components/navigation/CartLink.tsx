@@ -1,11 +1,13 @@
-import { count } from "console"
 import Link from "next/link"
+import { useLangPack } from '../../utils'
 
 interface CartLinkProps {
   count: number
 }
 
 const CartLink = ({ count }: CartLinkProps) => {
+  const langPack = useLangPack()
+
   return (
     <Link href="/cart">
       <a className="d-flex flex-column align-items-center">
@@ -19,7 +21,9 @@ const CartLink = ({ count }: CartLinkProps) => {
             {count}
           </div>
         </i>
-        <div className="text-secondary" style={{ fontSize: '11px' }}>Кошик</div>
+        <div className="text-secondary" style={{ fontSize: '11px' }}>
+          {langPack.navigation.cart}
+        </div>
       </a>
     </Link>
   )

@@ -1,6 +1,5 @@
-import { handleClientScriptLoad } from 'next/script'
 import { FloatingInput } from "ui"
-import { StateProp } from "../../../utils/types"
+import { useLangPack, StateProp } from '../../../utils'
 
 interface PersonProps {
   name: StateProp<string>
@@ -9,6 +8,8 @@ interface PersonProps {
 }
 
 const Person = ({ name, surname, phone }: PersonProps) => {
+  const langPack = useLangPack()
+
   const checkPhoneInput = (val: string): boolean => {
     if (val.length > 9) return false
 
@@ -19,13 +20,13 @@ const Person = ({ name, surname, phone }: PersonProps) => {
   return (
     <div className="row row-cols-2 g-3">
       <div className="col">
-        <FloatingInput label="Ім'я" val={name.val} setVal={name.set} />
+        <FloatingInput label={langPack.person.name} val={name.val} setVal={name.set} />
       </div>
       <div className="col">
-        <FloatingInput label="Прізвище" val={surname.val} setVal={surname.set} />
+        <FloatingInput label={langPack.person.surname} val={surname.val} setVal={surname.set} />
       </div>
       <div className="col w-100">
-        <FloatingInput front='+380' label="Номер телефону" val={phone.val} setVal={phone.set}
+        <FloatingInput front='+380' label={langPack.person.phone} val={phone.val} setVal={phone.set}
           check={checkPhoneInput} />
       </div>
     </div>

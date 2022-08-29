@@ -1,10 +1,7 @@
-import { Product } from "logic"
 import Link from "next/link"
-import { useRouter } from 'next/router'
-import { MouseEventHandler } from "react"
+import { Product } from "logic"
 import { ListItem } from "ui"
-import { useLocale } from '../../utils'
-import { urlFor } from "../../utils/cms/sanity"
+import { useLangPack } from '../../utils'
 import { useStore } from "../../utils/store/store"
 
 interface IProductListProps {
@@ -13,6 +10,7 @@ interface IProductListProps {
 
 const ProductList = ({ items }: IProductListProps) => {
   const store = useStore()
+  const langPack = useLangPack()
 
   const toCart = (item: Product) => {
     if (store && !store.cart.stock.val.some(some => some.val == item.id)) {
@@ -29,13 +27,17 @@ const ProductList = ({ items }: IProductListProps) => {
           <ListItem header={item.title} key={item.id}>
             <div className="d-flex justify-content-between justify-content-md-end
             gap-1 gap-md-3 gap-lg-4 align-items-center">
-              <div className="fs-6 fs-md-5 fw-semibold me-0 me-lg-3">Від {item.price.from} грн</div>
+              <div className="fs-6 fs-md-5 fw-semibold me-0 me-lg-3">
+                {langPack.productList.from} {item.price.from} грн
+              </div>
               <Link href={`/order/${item.slug}`}>
-                <button className="btn btn-sm btn-main shadow-none">Замовити в 1 клік</button>
+                <button className="btn btn-sm btn-main shadow-none">
+                  {langPack.productList.order}
+                </button>
               </Link>
               <button className={`btn btn-sm ${inCart ? "btn-green" : "btn-outline"} shadow-none`}
                 onClick={() => toCart(item)}>
-                {inCart ? "Додано" : "В кошик"}
+                {inCart ? langPack.productList.added : langPack.productList.cart}
               </button>
             </div>
           </ListItem>

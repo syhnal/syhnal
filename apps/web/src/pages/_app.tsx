@@ -1,19 +1,18 @@
-// installed
 import type { AppProps } from 'next/app'
-
-// local
 import '../styles/globals.css'
 import { Layout } from '../components'
-import { StoreProvider } from '../utils'
+import { LangPackProvider, StoreProvider } from '../utils'
 
 
 const SyhnalApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <StoreProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </StoreProvider>
+    <LangPackProvider langPack={pageProps.langPack}>
+      <StoreProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </StoreProvider>
+    </LangPackProvider>
   )
 }
 

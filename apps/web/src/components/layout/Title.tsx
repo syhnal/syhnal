@@ -1,6 +1,6 @@
 import Head from "next/head"
 
-type TitleProps = {
+interface TitleProps {
   val: string
 }
 

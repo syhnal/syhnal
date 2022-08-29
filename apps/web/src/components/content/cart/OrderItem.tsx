@@ -1,8 +1,6 @@
-import { CartItem, OrderProduct, Product } from "logic"
-import Image from "next/image"
+import { CartItem, OrderProduct } from "logic"
 import { Counter, ListItem } from "ui"
-import { urlFor } from "../../../utils/cms/sanity"
-import { useStore } from "../../../utils/store/store"
+import { useStore } from "../../../utils"
 
 interface OrderItemProps {
   product: CartItem<OrderProduct>

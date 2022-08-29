@@ -1,14 +1,8 @@
-// installed
 import groq from "groq";
-import { GetStaticProps, NextPage } from "next";
-
-// shared
+import { NextPage } from "next";
 import { Product, toProductList, Brand, uniqueBrand } from "logic";
-
-// local
-import { getClient, filterCatalog, toLocale } from '../../utils'
+import { getClient, filterCatalog, GetStaticProps, toLang } from '../../utils'
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
-
 
 interface CatalogProps {
   products: Product[]
@@ -43,7 +37,7 @@ const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale)
+  const lang = toLang(locale)
 
   const products = await client.fetch(
     groq`*[_type == 'product']{..., brand->}`
@@ -55,6 +49,11 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../../langs/navigation/${lang}.json`),
+        productList: require(`../../langs/components/ProductList/${lang}.json`),
+        catalog: require(`../../langs/catalog/${lang}.json`)
+      },
       products,
       brands
     },

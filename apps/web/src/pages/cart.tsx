@@ -1,21 +1,16 @@
-// installed
-import { GetStaticProps, NextPage } from "next"
+import { NextPage } from "next"
 import { useState } from "react"
 import groq from "groq"
-
-// shared
-import { toProductList, Product, toCategoryList, Category, tgSendMessage } from "logic"
-
-// local
-import { useStore, getClient, tgConfig, toLocale } from '../utils'
+import { toProductList, Product, tgSendMessage } from "logic"
+import { useStore, getClient, tgConfig, toLang, GetStaticProps, ILangPack } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
-
-interface ICartProps {
+interface CartProps {
+  langPack: ILangPack
   products: Product[]
 }
 
-const Cart: NextPage<ICartProps> = ({ products }) => {
+const Cart: NextPage<CartProps> = ({ langPack, products }) => {
   const store = useStore()
 
   const [name, setName] = useState("")
@@ -71,12 +66,8 @@ VIN: ${item.val.car.vin}
         )
           }`
       }
-
       text += `\n---------\nТелефон: +380${phone}`
-
       tgSendMessage(text, tgConfig)
-
-
     }
   }
 
@@ -86,17 +77,16 @@ VIN: ${item.val.car.vin}
 
       <div className="container-xl" style={{ minHeight: "65vh" }}>
         {store && (store.cart.order.val.length > 0 || store.cart.stock.val.length > 0)
-          ? <div className="row">
+          ? <div className="row gy-3">
             <div className="col">
-              <h2>Кошик</h2>
+              <h2>{langPack.cart.header}</h2>
 
               {store.cart.stock.val.length > 0 ?
                 <div className="mt-3">
-                  <h4>Запчастини в наявності</h4>
+                  <h4>{langPack.cart.stock}</h4>
                   <ul className="list-group list-group-flush">
                     {store?.cart.stock.val.map(item => {
                       const product = products.find(data => data.id == item.val)
-
                       return product ?
                         <StockItem count={item.count} product={product} key={item.val} />
                         : null
@@ -108,7 +98,7 @@ VIN: ${item.val.car.vin}
 
               {store.cart.order.val.length > 0 ?
                 <div className="mt-3">
-                  <h4>Запчастини під замовлення</h4>
+                  <h4>{langPack.cart.custom}</h4>
                   <ul className="list-group list-group-flush">
                     {store?.cart.order.val.map(product =>
                       product ?
@@ -120,27 +110,29 @@ VIN: ${item.val.car.vin}
                 : null
               }
 
-              <h2 className="mt-4">Особисті дані</h2>
+              <h2 className="mt-4">{langPack.cart.personal}</h2>
               <Person name={{ val: name, set: setName }}
                 surname={{ val: surname, set: setSurname }}
                 phone={{ val: phone, set: setPhone }} />
 
             </div>
 
-            <div className="col-md-auto">
+            <div className="col-md-4 col-lg-3">
               <div className="text-center sticky-md-top">
                 <div className="border rounded-3 py-5 px-4" style={{ top: 30 }}>
-                  <h3>В кошику</h3>
+                  <h3>{langPack.cart.in}</h3>
                   <small className="text-muted">
-                    {store?.cart.stock.val.length}{store && store.cart.order.val.length > 0 ? ` + ${store?.cart.order.val.length}` : ""} товари
+                    {store?.cart.stock.val.length}{store && store.cart.order.val.length > 0 ?
+                      ` + ${store?.cart.order.val.length}` : ""} {langPack.cart.product}
                   </small>
-                  <h3 className="fw-bold text-primary my-3">від {price()} грн</h3>
+                  <h3 className="fw-bold text-primary my-3">{langPack.cart.from} {price()} грн</h3>
                   <button className="btn btn-dark-blue shadow-none" disabled={!isValid}
-                    onClick={order}>Замовити</button>
+                    onClick={order}>{langPack.cart.order}</button>
                 </div>
                 <div className="px-3">
-                  <small>
-                    Наш магазин не здійснює<br />доставку та працює лише<br />в м. Умань
+                  <small className='text-wrap'>
+                    {langPack.cart.info}
+                    {/* Наш магазин не здійснює<br />доставку та працює лише<br />в м. Умань */}
                   </small>
                 </div>
               </div>
@@ -148,7 +140,7 @@ VIN: ${item.val.car.vin}
 
           </div>
           : <h2 className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
-            Ваш кошик порожній
+            {langPack.cart.empty}
           </h2>
         }
       </div>
@@ -158,7 +150,7 @@ VIN: ${item.val.car.vin}
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
-  const lang = toLocale(locale)
+  const lang = toLang(locale)
 
   const products = await client.fetch(
     groq`*[_type == 'product']{..., brand->}`
@@ -166,6 +158,11 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../langs/navigation/${lang}.json`),
+        person: require(`../langs/components/Person/${lang}.json`),
+        cart: require(`../langs/cart/${lang}.json`),
+      },
       products
     },
     revalidate: 10,

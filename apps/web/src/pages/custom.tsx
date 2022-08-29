@@ -1,25 +1,19 @@
-// installed
-import { GetStaticProps, NextPage } from "next";
-import groq from "groq";
-import { useEffect, useState } from "react";
-
-// shared
-import { FloatingInput, FloatingSelect } from "ui";
-import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
-
-// local
-import { Title } from "../components";
-import { getClient, useStore } from '../utils'
-import Link from "next/link";
+import { NextPage } from "next";
 import { useRouter } from 'next/router';
-
+import { useEffect, useState } from "react";
+import groq from "groq";
+import { FloatingInput, FloatingSelect } from "ui";
+import { Brand, toBrandList } from "logic";
+import { Title } from "../components";
+import { getClient, useStore, GetStaticProps, toLang, ILangPack } from '../utils'
 
 interface CustomPageProps {
   years: number[]
   brands: string[]
+  langPack: ILangPack
 }
 
-const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
+const CustomPage: NextPage<CustomPageProps> = ({ langPack, years, brands }) => {
   const [name, setName] = useState("")
   const store = useStore()
   const router = useRouter()
@@ -62,7 +56,7 @@ const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
       <Title val="Замовити" />
 
       <div className="container-xl" style={{ minHeight: '64vh' }}>
-        <h2 className="mb-3 mt-4">Замовлення автозапчастин</h2>
+        <h2 className="mb-3 mt-4">{langPack.custom.header}</h2>
 
         {store ?
           <div className="row row-cols-1 row-cols-sm-2 g-3">
@@ -78,19 +72,19 @@ const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
             </div>
             <div className="col">
               <FloatingSelect val={store.car.val.year} setVal={setYear}
-                options={years} label="Рік випуску" />
+                options={years} label={langPack.custom.year} />
             </div>
             <div className="col w-100">
-              <FloatingInput val={name} setVal={setName} label="Назва деталі" />
+              <FloatingInput val={name} setVal={setName} label={langPack.custom.name} />
             </div>
           </div>
           : null}
 
         <div className="d-flex justify-content-center gap-3 mt-3 mb-5 pb-4">
           <button className="btn btn-outline btn-lg"
-            onClick={addToCart} disabled={!isValid}>Додати в кошик</button>
+            onClick={addToCart} disabled={!isValid}>{langPack.custom.cart}</button>
           <button className="btn btn-dark-blue btn-lg shadow-none"
-            onClick={order} disabled={!isValid}>Замовити</button>
+            onClick={order} disabled={!isValid}>{langPack.custom.order}</button>
         </div>
 
       </div>
@@ -100,6 +94,7 @@ const CustomPage: NextPage<CustomPageProps> = ({ years, brands }) => {
 
 const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }) => {
   const client = getClient(preview)
+  const lang = toLang(locale);
 
   const brands = await client
     .fetch(groq`*[_type == 'brand']`)
@@ -110,6 +105,10 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
 
   return {
     props: {
+      langPack: {
+        navigation: require(`../langs/navigation/${lang}.json`),
+        custom: require(`../langs/custom/${lang}.json`)
+      },
       years,
       brands
     },

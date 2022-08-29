@@ -1,22 +1,16 @@
-// installed
 import { NextPage } from "next"
 import { useState } from "react"
 import groq from "groq"
-
-// shared
 import { toProductList, Product, tgSendMessage } from "logic"
-
-// local
 import { useStore, getClient, tgConfig, toLang, GetStaticProps, ILangPack } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
-
-interface ICartProps {
+interface CartProps {
   langPack: ILangPack
   products: Product[]
 }
 
-const Cart: NextPage<ICartProps> = ({ langPack, products }) => {
+const Cart: NextPage<CartProps> = ({ langPack, products }) => {
   const store = useStore()
 
   const [name, setName] = useState("")
@@ -72,12 +66,8 @@ VIN: ${item.val.car.vin}
         )
           }`
       }
-
       text += `\n---------\nТелефон: +380${phone}`
-
       tgSendMessage(text, tgConfig)
-
-
     }
   }
 

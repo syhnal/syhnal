@@ -1,7 +1,6 @@
 import { useRouter } from "next/router"
 import { IconInput } from "ui"
-import { useLangPack } from '../../utils'
-import { useStore } from "../../utils/store/store"
+import { useStore, useLangPack } from '../../utils'
 import { CartLink } from "./CartLink"
 import { LangSwitch } from './LangSwitch'
 import { Logo } from "./Logo"
@@ -50,7 +49,6 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-
     </nav >
   )
 }

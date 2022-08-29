@@ -1,15 +1,10 @@
-// installed
 import groq from "groq"
 import { GetStaticPaths, NextPage } from "next"
 import { useState } from "react"
-
-// shared
 import { Product, tgSendMessage, toProduct } from "logic"
-
-// local
+import { Counter, ListItem } from "ui"
 import { tgConfig, getClient, GetStaticProps, toLang, ILangPack } from '../../utils'
 import { Person, Title } from "../../components"
-import { Counter, ListItem } from "ui"
 
 
 interface OrderPageProps {

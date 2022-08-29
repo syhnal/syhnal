@@ -1,8 +1,7 @@
-import { Brand } from "logic"
 import Image from "next/image"
 import Link from "next/link"
-import { useStore } from "../../../utils"
-import { urlFor } from "../../../utils/cms/sanity"
+import { Brand } from "logic"
+import { urlFor, useStore } from "../../../utils"
 
 interface BrandsProps {
   items: Brand[]
@@ -31,7 +30,6 @@ const StockBrandList = ({ items }: BrandsProps) => {
       )}
     </div>
   )
-
 }
 
 export { StockBrandList }

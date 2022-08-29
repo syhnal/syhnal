@@ -1,7 +1,5 @@
-import { handleClientScriptLoad } from 'next/script'
 import { FloatingInput } from "ui"
-import { useLangPack } from '../../../utils'
-import { StateProp } from "../../../utils/types"
+import { useLangPack, StateProp } from '../../../utils'
 
 interface PersonProps {
   name: StateProp<string>

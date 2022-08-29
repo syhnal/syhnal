@@ -1,18 +1,14 @@
-// installed
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import groq from 'groq'
-
-// shared
-import { Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand } from 'logic'
-
-// local
+import {
+  Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand
+} from 'logic'
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
 import { urlFor, getClient, toLang, GetStaticProps, ILangPack } from '../utils'
-import Image from 'next/image'
 
-
-interface IHomeProps {
+interface HomeProps {
   langPack: ILangPack
   novelty: Product[]
   brands: {
@@ -22,7 +18,7 @@ interface IHomeProps {
   categories: Category[]
 }
 
-const HomePage: NextPage<IHomeProps> = ({ langPack, brands, novelty, categories }) => {
+const HomePage: NextPage<HomeProps> = ({ langPack, brands, novelty, categories }) => {
   return (
     <div>
       <Title val='Сигнал' />
@@ -52,7 +48,8 @@ const HomePage: NextPage<IHomeProps> = ({ langPack, brands, novelty, categories 
                 <a className='col'>
                   <div >
                     {category.img ?
-                      <Image src={urlFor(category.img).url()} className="card-img-top" width={900} height={600} />
+                      <Image src={urlFor(category.img).url()} className="card-img-top"
+                        width={900} height={600} />
                       : null}
                     <h5 className='card-title text-center'>{category.title}</h5>
                   </div>
@@ -97,7 +94,8 @@ const getStaticProps: GetStaticProps = async ({ locale = 'uk', preview = false }
     .then(brands => brands.filter(uniqueBrand))
 
   const orderBrands = await client
-    .fetch(groq`*[_type == 'brand' && !(_id in ["${stockBrands.map(brand => brand.id).join('", "')}"])]`)
+    .fetch(groq`*[_type == 'brand' && !(_id in ["${stockBrands
+      .map(brand => brand.id).join('", "')}"])]`)
     .then<Brand[]>(toBrandList)
 
   const categories = await client

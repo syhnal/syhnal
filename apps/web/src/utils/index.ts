@@ -10,9 +10,5 @@ export * from "./telegram/config"
 export * from "./store/store"
 export * from "./store/filter"
 
-// types
-export * from "./types"
-
 // locale
-export * from "./locale/useLocale"
-export * from "./locale/langPack"
+export * from "./lang/langPack"

@@ -1,7 +1,13 @@
-import { Car, CartItem, OrderProduct, Product } from "logic";
-import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react";
-import { StateProp } from "../types";
+import {
+  Dispatch, SetStateAction, createContext, FC, useContext, useEffect, useState
+} from "react";
+import { Car, CartItem, OrderProduct, } from "logic";
 import { loadDb, updateDb } from "./db";
+
+interface StateProp<T> {
+  val: T
+  set: Dispatch<SetStateAction<T>>
+}
 
 interface IStoreContext {
   cart: {
@@ -16,14 +22,12 @@ interface IStoreContext {
 }
 
 const StoreContext = createContext<IStoreContext | null>(null)
+const useStore = () => useContext(StoreContext)
 
 const StoreProvider: FC = ({ children }) => {
-  const [stockCart, setStockCart] = useState<CartItem<string>[]>([])
-  const [orderCart, setOrderCart] = useState<CartItem<OrderProduct>[]>([])
-  const [car, setCar] = useState<Car>({
-    brand: "", model: "", vin: "", year: 2022
-  })
-
+  const [stock, setStockCart] = useState<CartItem<string>[]>([])
+  const [order, setOrderCart] = useState<CartItem<OrderProduct>[]>([])
+  const [car, setCar] = useState<Car>({ brand: "", model: "", vin: "", year: 2022 })
   const [start, setStart] = useState<string>("")
   const [brand, setBrand] = useState<string>("")
 
@@ -37,19 +41,16 @@ const StoreProvider: FC = ({ children }) => {
 
   useEffect(() => {
     updateDb({
-      cart: {
-        stock: stockCart,
-        order: orderCart
-      }
+      cart: { stock, order }
     })
-  }, [stockCart, orderCart])
+  }, [stock, order])
 
   return (
     <StoreContext.Provider
       value={{
         cart: {
-          stock: { val: stockCart, set: setStockCart },
-          order: { val: orderCart, set: setOrderCart }
+          stock: { val: stock, set: setStockCart },
+          order: { val: order, set: setOrderCart }
         },
         search: {
           start: { val: start, set: setStart },
@@ -62,7 +63,5 @@ const StoreProvider: FC = ({ children }) => {
     </StoreContext.Provider >
   )
 }
-
-const useStore = () => useContext(StoreContext)
 
 export { StoreProvider, useStore }

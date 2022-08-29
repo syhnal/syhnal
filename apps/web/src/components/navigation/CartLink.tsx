@@ -1,4 +1,3 @@
-import { count } from "console"
 import Link from "next/link"
 import { useLangPack } from '../../utils'
 

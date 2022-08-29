@@ -1,14 +1,8 @@
-// installed
 import groq from "groq";
 import { NextPage } from "next";
-
-// shared
 import { Product, toProductList, Brand, uniqueBrand } from "logic";
-
-// local
 import { getClient, filterCatalog, GetStaticProps, toLang } from '../../utils'
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
-
 
 interface CatalogProps {
   products: Product[]

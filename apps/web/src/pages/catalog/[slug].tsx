@@ -1,15 +1,9 @@
-// installed
 import { GetStaticPaths, NextPage } from "next"
+import Link from "next/link"
 import groq from "groq"
-
-// shared
-import { Product, Brand, toProductList, toBrandList, uniqueBrand, Category } from "logic"
-
-// local
+import { Product, Brand, toProductList, uniqueBrand } from "logic"
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components"
 import { filterCatalog, getClient, toLang, GetStaticProps } from "../../utils"
-import Link from "next/link"
-
 
 interface CategoryCatalogProps {
   products: Product[]

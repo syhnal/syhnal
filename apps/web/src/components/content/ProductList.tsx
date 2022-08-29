@@ -1,10 +1,7 @@
-import { Product } from "logic"
 import Link from "next/link"
-import { useRouter } from 'next/router'
-import { MouseEventHandler } from "react"
+import { Product } from "logic"
 import { ListItem } from "ui"
-import { useLangPack, useLocale } from '../../utils'
-import { urlFor } from "../../utils/cms/sanity"
+import { useLangPack } from '../../utils'
 import { useStore } from "../../utils/store/store"
 
 interface IProductListProps {

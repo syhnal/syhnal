@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useLangPack } from '../../../utils'
 
-
 const Banner = () => {
   const langPack = useLangPack()
 
@@ -26,7 +25,6 @@ const Banner = () => {
           </a>
         </Link>
       </div>
-
     </div>
   )
 }

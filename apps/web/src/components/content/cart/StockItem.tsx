@@ -1,7 +1,6 @@
-import { CartItem, Product } from "logic"
+import { Product } from "logic"
 import { Counter, ListItem } from "ui"
-import { useLangPack } from '../../../utils'
-import { useStore } from "../../../utils/store/store"
+import { useStore, useLangPack } from '../../../utils'
 
 interface StockItemProps {
   count: number

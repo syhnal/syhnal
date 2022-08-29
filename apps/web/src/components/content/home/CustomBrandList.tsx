@@ -1,8 +1,7 @@
-import { Brand } from "logic"
 import Image from "next/image"
 import Link from "next/link"
-import { useStore } from "../../../utils"
-import { urlFor } from "../../../utils/cms/sanity"
+import { Brand } from "logic"
+import { useStore, urlFor } from "../../../utils"
 
 interface CustomBrandListProps {
   items: Brand[]
@@ -38,7 +37,6 @@ const CustomBrandList = ({ items }: CustomBrandListProps) => {
       </div>
     </div>
   )
-
 }
 
 export { CustomBrandList }

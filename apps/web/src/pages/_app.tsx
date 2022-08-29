@@ -1,7 +1,4 @@
-// installed
 import type { AppProps } from 'next/app'
-
-// local
 import '../styles/globals.css'
 import { Layout } from '../components'
 import { LangPackProvider, StoreProvider } from '../utils'

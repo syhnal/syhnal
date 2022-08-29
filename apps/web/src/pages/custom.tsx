@@ -1,17 +1,11 @@
-// installed
 import { NextPage } from "next";
-import groq from "groq";
+import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
-
-// shared
+import groq from "groq";
 import { FloatingInput, FloatingSelect } from "ui";
-import { Brand, Car, toBrandList, Category, toCategoryList } from "logic";
-
-// local
+import { Brand, toBrandList } from "logic";
 import { Title } from "../components";
 import { getClient, useStore, GetStaticProps, toLang, ILangPack } from '../utils'
-import { useRouter } from 'next/router';
-
 
 interface CustomPageProps {
   years: number[]

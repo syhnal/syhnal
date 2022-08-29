@@ -9,7 +9,7 @@ export interface Db {
 }
 
 const loadDb = (): Db | undefined => {
-  const storageStr = localStorage.getItem("syhnal")
+  const storageStr = localStorage.getItem("signal")
   if (storageStr) {
     const storageJson = JSON.parse(storageStr)
     return {
@@ -19,7 +19,6 @@ const loadDb = (): Db | undefined => {
       }
     }
   }
-  return
 }
 
 const updateDb = (cart: Db) => {

@@ -1,4 +1,4 @@
-import { Locale } from './locale'
+import { Lang } from './locale'
 
 export interface Category {
   id: string
@@ -7,7 +7,7 @@ export interface Category {
   slug: string
 }
 
-const toCategory = (data: any, locale: Locale): Category => {
+const toCategory = (data: any, locale: Lang): Category => {
   let category: Category = {
     id: data._id,
     title: data.title[locale],
@@ -17,7 +17,7 @@ const toCategory = (data: any, locale: Locale): Category => {
   return category
 }
 
-const toCategoryList = (dataList: any, locale: Locale): Category[] =>
+const toCategoryList = (dataList: any, locale: Lang): Category[] =>
   dataList.map((data: any) => toCategory(data, locale))
 
 export { toCategory, toCategoryList }

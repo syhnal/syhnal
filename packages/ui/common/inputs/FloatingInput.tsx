@@ -22,7 +22,7 @@ const FloatingInput = ({ label, val, setVal, front, check }: FloatingInputProps)
     >
       <div className='d-flex align-items-center px-4 pt-3 pb-1'>
         {front ? <span>{front}</span> : null}
-        <input className="border-0 p-0" autoFocus={false}
+        <input className="border-0 p-0 w-100" autoFocus={false}
           style={{ outline: "none" }} ref={input} value={val} onChange={change}
         />
       </div>

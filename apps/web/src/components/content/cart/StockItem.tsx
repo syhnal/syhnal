@@ -1,7 +1,6 @@
 import { CartItem, Product } from "logic"
-import Image from "next/image"
 import { Counter, ListItem } from "ui"
-import { urlFor } from "../../../utils/cms/sanity"
+import { useLangPack } from '../../../utils'
 import { useStore } from "../../../utils/store/store"
 
 interface StockItemProps {
@@ -11,6 +10,7 @@ interface StockItemProps {
 
 const StockItem = ({ count, product }: StockItemProps) => {
   const store = useStore()
+  const langPack = useLangPack()
 
   const remove = () => {
     if (store) store.cart.stock.set(store.cart.stock.val
@@ -23,7 +23,7 @@ const StockItem = ({ count, product }: StockItemProps) => {
   }
 
   return (
-    <ListItem header={product.title.title} headerSize={6}>
+    <ListItem header={product.title} headerSize={6}>
       <div className="row align-items-center g-0">
         <div className="col d-flex justify-content-start justify-content-md-around">
           <Counter count={count} setCount={setCount} />
@@ -31,7 +31,7 @@ const StockItem = ({ count, product }: StockItemProps) => {
 
         <div className="col">
           <div style={{ fontWeight: 500 }}>
-            від {product.price.from * count} грн
+            {langPack.cart.from} {product.price.from * count} грн
           </div>
         </div>
 

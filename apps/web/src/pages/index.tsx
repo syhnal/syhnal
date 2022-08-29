@@ -23,8 +23,6 @@ interface IHomeProps {
 }
 
 const HomePage: NextPage<IHomeProps> = ({ langPack, brands, novelty, categories }) => {
-  console.log(langPack)
-
   return (
     <div>
       <Title val='Сигнал' />

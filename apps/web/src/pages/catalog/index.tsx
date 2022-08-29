@@ -1,7 +1,7 @@
 import groq from "groq";
 import { NextPage } from "next";
-import { Product, toProductList, Brand, uniqueBrand } from "logic";
-import { getClient, filterCatalog, GetStaticProps, toLang } from '../../utils'
+import { Product, toProductList, Brand, toLang, uniqueBrand } from "logic";
+import { getClient, useFilterCatalog, GetStaticProps } from '../../utils'
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components";
 
 interface CatalogProps {
@@ -10,7 +10,7 @@ interface CatalogProps {
 }
 
 const CatalogPage: NextPage<CatalogProps> = ({ products, brands }) => {
-  const productList = filterCatalog(products)
+  const productList = useFilterCatalog(products)
 
   return (
     <div>

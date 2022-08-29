@@ -1,9 +1,9 @@
 import groq from "groq"
 import { GetStaticPaths, NextPage } from "next"
 import { useState } from "react"
-import { Product, tgSendMessage, toProduct } from "logic"
+import { Product, tgSendMessage, toLang, toProduct } from "logic"
 import { Counter, ListItem } from "ui"
-import { tgConfig, getClient, GetStaticProps, toLang, ILangPack } from '../../utils'
+import { tgConfig, getClient, GetStaticProps, ILangPack } from '../../utils'
 import { Person, Title } from "../../components"
 
 

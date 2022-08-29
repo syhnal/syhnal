@@ -1,5 +1,5 @@
 import { Brand, toBrand } from "./brand"
-import { Lang } from './locale'
+import { Lang } from './lang'
 
 export interface Product {
   id: string

@@ -1,9 +1,9 @@
 import { GetStaticPaths, NextPage } from "next"
 import Link from "next/link"
 import groq from "groq"
-import { Product, Brand, toProductList, uniqueBrand } from "logic"
+import { Product, Brand, toProductList, toLang, uniqueBrand } from "logic"
 import { NoInStock, ProductList, SearchBrand, Title } from "../../components"
-import { filterCatalog, getClient, toLang, GetStaticProps } from "../../utils"
+import { useFilterCatalog, getClient, GetStaticProps } from "../../utils"
 
 interface CategoryCatalogProps {
   products: Product[]
@@ -12,7 +12,7 @@ interface CategoryCatalogProps {
 }
 
 const CategoryCatalog: NextPage<CategoryCatalogProps> = ({ products, category, brands }) => {
-  const productList = filterCatalog(products)
+  const productList = useFilterCatalog(products)
   return (
     <>
       <Title val="Каталог" />

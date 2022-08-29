@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { toLang } from '../../utils'
+import { toLang } from 'logic'
 
 const LangSwitch = () => {
   const { locale = "uk", route } = useRouter()

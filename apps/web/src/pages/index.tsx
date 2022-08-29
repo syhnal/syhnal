@@ -3,10 +3,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import groq from 'groq'
 import {
-  Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand
+  Brand, Category, Product, toBrandList, toCategoryList, toProductList, uniqueBrand, toLang
 } from 'logic'
 import { Banner, StockBrandList, Title, ProductList, CustomBrandList } from '../components'
-import { urlFor, getClient, toLang, GetStaticProps, ILangPack } from '../utils'
+import { urlFor, getClient, GetStaticProps, ILangPack } from '../utils'
 
 interface HomeProps {
   langPack: ILangPack
@@ -49,7 +49,7 @@ const HomePage: NextPage<HomeProps> = ({ langPack, brands, novelty, categories }
                   <div >
                     {category.img ?
                       <Image src={urlFor(category.img).url()} className="card-img-top"
-                        width={900} height={600} />
+                        width={900} height={600} alt="" />
                       : null}
                     <h5 className='card-title text-center'>{category.title}</h5>
                   </div>

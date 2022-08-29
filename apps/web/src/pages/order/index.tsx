@@ -1,10 +1,10 @@
 import { NextPage } from 'next'
 import { useRouter } from "next/router"
 import { useState } from "react"
-import { tgSendMessage } from "logic"
+import { toLang, tgSendMessage } from "logic"
 import { Counter, ListItem } from "ui"
 import { Person, Title } from "../../components"
-import { GetStaticProps, ILangPack, tgConfig, toLang, useStore } from "../../utils"
+import { GetStaticProps, ILangPack, tgConfig, useStore } from "../../utils"
 
 interface OrderCustomPageProps {
   langPack: ILangPack

@@ -4,7 +4,7 @@ import {
 import { Car, CartItem, OrderProduct, } from "logic";
 import { loadDb, updateDb } from "./db";
 
-interface StateProp<T> {
+export interface StateProp<T> {
   val: T
   set: Dispatch<SetStateAction<T>>
 }

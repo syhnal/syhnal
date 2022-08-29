@@ -14,7 +14,6 @@ interface LangPackProps {
 
 type GetLangPackStaticProps = GetStaticProps<LangPackProps>
 
-type Lang = "uk" | "ru";
 
 const LangPackContext = createContext<ILangPack>({ navigation: {} })
 
@@ -28,7 +27,6 @@ const LangPackProvider: FC<LangPackProps> = ({ langPack, children }) => {
 
 const useLangPack = () => useContext(LangPackContext);
 
-const toLang = (locale: string): Lang => locale as Lang;
 
-export { LangPackProvider, useLangPack, toLang }
+export { LangPackProvider, useLangPack }
 export type { GetLangPackStaticProps as GetStaticProps, ILangPack }

@@ -1,8 +1,8 @@
 import { NextPage } from "next"
 import { useState } from "react"
 import groq from "groq"
-import { toProductList, Product, tgSendMessage } from "logic"
-import { useStore, getClient, tgConfig, toLang, GetStaticProps, ILangPack } from '../utils'
+import { toProductList, Product, toLang, tgSendMessage } from "logic"
+import { useStore, getClient, tgConfig, GetStaticProps, ILangPack } from '../utils'
 import { OrderItem, Person, StockItem, Title } from "../components"
 
 interface CartProps {

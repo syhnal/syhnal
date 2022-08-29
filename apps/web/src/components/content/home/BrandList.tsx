@@ -21,7 +21,8 @@ const StockBrandList = ({ items }: BrandsProps) => {
           <Link href="/catalog">
             <a className="col">
               <div className="border-bottom d-flex justify-content-between align-items-center">
-                <Image src={urlFor(brand.img).url()} width='50px' height='50px' quality={100} />
+                <Image src={urlFor(brand.img).url()} width='50px' height='50px'
+                  quality={100} alt="" />
                 {brand.title}
               </div>
             </a>

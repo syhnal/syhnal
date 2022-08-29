@@ -1,7 +1,7 @@
 import { Product } from 'logic';
 import { useStore } from './store';
 
-const filterCatalog = (products: Product[]): Product[] => {
+const useFilterCatalog = (products: Product[]): Product[] => {
   const store = useStore()
   const start = store ? store.search.start.val.toLowerCase() : ""
 
@@ -11,4 +11,4 @@ const filterCatalog = (products: Product[]): Product[] => {
   )
 }
 
-export { filterCatalog }
+export { useFilterCatalog }

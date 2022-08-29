@@ -1,4 +1,4 @@
-import { Lang } from './locale'
+import { Lang } from './lang'
 
 export interface Category {
   id: string

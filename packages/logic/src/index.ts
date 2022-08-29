@@ -9,4 +9,4 @@ export * from "./types/category"
 export * from "./types/car"
 export * from "./types/cart"
 
-export * from "./types/locale"
+export * from "./types/lang"

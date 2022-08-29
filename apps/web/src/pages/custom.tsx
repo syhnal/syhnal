@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import groq from "groq";
 import { FloatingInput, FloatingSelect } from "ui";
-import { Brand, toBrandList } from "logic";
+import { Brand, toBrandList, toLang } from "logic";
 import { Title } from "../components";
-import { getClient, useStore, GetStaticProps, toLang, ILangPack } from '../utils'
+import { getClient, useStore, GetStaticProps, ILangPack } from '../utils'
 
 interface CustomPageProps {
   years: number[]
@@ -49,7 +49,7 @@ const CustomPage: NextPage<CustomPageProps> = ({ langPack, years, brands }) => {
     if (store && store.car.val.brand == "") {
       store?.car.set({ ...store.car.val, brand: brands[0] })
     }
-  }, [])
+  }, [store, brands])
 
   return (
     <div>

@@ -22,7 +22,7 @@ const loadDb = (): Db | undefined => {
 }
 
 const updateDb = (cart: Db) => {
-  localStorage.setItem("syhnal", JSON.stringify(cart))
+  localStorage.setItem("signal", JSON.stringify(cart))
 }
 
 export { loadDb, updateDb }

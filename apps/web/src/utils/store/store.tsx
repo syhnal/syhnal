@@ -33,7 +33,6 @@ const StoreProvider: FC = ({ children }) => {
 
   useEffect(() => {
     const db = loadDb()
-    console.log(db)
     if (db) {
       setStockCart(db.cart.stock)
       setOrderCart(db.cart.order)

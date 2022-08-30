@@ -1,2 +1,2 @@
-# syhnal
-Website for syhnal car parts shop
+# Signal
+Website for car parts shop. Visit https://signal-ua.vercel.app/

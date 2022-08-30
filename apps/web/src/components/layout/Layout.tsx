@@ -14,7 +14,7 @@ const Layout: FC = ({ children }) => {
         <meta name="description" content="Каталог автозапчастин магазину Сигнал. Працює в місті Умань, Краматорськ." />
         <meta name="keywords" content="сигнал, автомагазин, каталог, автозапчастини, автозапчасти, Умань, умань, краматорськ, краматорск, магазин" />
         <meta name="robots" content="index, follow" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="Ukrainian" />
 
         <meta name="geo.region" content="UA-71" />

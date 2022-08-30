@@ -9,7 +9,18 @@ const Layout: FC = ({ children }) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Каталог автозапчастин магазину Сигнал" />
+
+        <meta name="title" content="Автомагазин Сигнал" />
+        <meta name="description" content="Каталог автозапчастин магазину Сигнал. Працює в місті Умань, Краматорськ." />
+        <meta name="keywords" content="сигнал, автомагазин, каталог, автозапчастини, автозапчасти, Умань, умань, краматорськ, краматорск, магазин" />
+        <meta name="robots" content="index, follow" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="Ukrainian" />
+
+        <meta name="geo.region" content="UA-71" />
+        <meta name="geo.placename" content="Uman" />
+        <meta name="geo.position" content="48.749762;30.220305" />
+        <meta name="ICBM" content="48.749762, 30.220305" />
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
           integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
